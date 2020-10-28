@@ -1,0 +1,24 @@
+*
+{  
+    outline: none;
+  
+}
+
+li{
+    list-style: none;
+}
+
+.search-container{
+    display:grid;
+    place-items:center;
+    padding-top:2%;
+}
+
+#search{
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    border-color: rgba(0, 255, 255, 0.26);
+    font-size: 20px;
+    
+}

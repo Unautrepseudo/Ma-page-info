@@ -18,8 +18,10 @@
 
 let ap = document.querySelector('#ap');
 let search = document.querySelector('#search');
-let requestURL = 'https://jsonplaceholder.typicode.com/users';
+let array =[];
+let requestURL = 'https://jsonplaceholder.typicode.com/posts';
 let request = new XMLHttpRequest();
+let noms =[];
 
 request.open('GET', requestURL);
 request.responseType ='json';
@@ -35,20 +37,22 @@ request.onload = function(){
 function names(jsonObj){
     
     for( i =0; i<jsonObj.length; i++){
-        noms =[];
-        ap.innerHTML += `<li> ${jsonObj[i].name} </li>`;
-
-        noms =jsonObj[i].name;
-        console.log(noms)
+       // ap.innerHTML += `<li> ${jsonObj[i].title} </li>`;
+        array.push(jsonObj[i].title)
+        //noms =jsonObj[i].title;
+        
     }
 }
-
+console.log(array)
 
 search.addEventListener('input',function(e){
-    let namesArray=[];
 
     if(e.target.value){
-        namesArray = noms.filter( nom => nom.toLowerCase().includes(e.target.value));
+       noms = array.filter( nom => nom.toLowerCase().startsWith(e.target.value));
+       noms = noms.map(nom =>`<li class='test'> ${nom} </li>`)
+       ap.innerHTML = noms.join('');
+    }else{
+        ap.innerHTML = '';
+
     }
-    console.log(namesArray)
 })

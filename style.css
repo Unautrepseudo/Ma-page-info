@@ -22,7 +22,17 @@ li{
     font-size: 20px;
     
 }
+#ap{
+    padding-top: 50px;
+    font-size: 25px;
 
-.test:hover{
+}
+.result-title:hover{
 color:rgb(22, 145, 202);
+cursor: pointer;
+}
+
+.news-bloc{
+    border: 1px solid black;
+    margin-bottom:20px;
 }

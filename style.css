@@ -1,6 +1,7 @@
 *
 {  
     outline: none;
+    
   
 }
 
@@ -49,10 +50,9 @@ cursor: pointer;
 
 /*************NAV******************/
 nav{
-    width: 100%;
     height: 90px;
     border-bottom: 1px solid rgba(8, 177, 163, 0.116);
-     /* background: rgba(151, 151, 149, 0.219); */
+     background: rgb(255, 255, 255);
 }
 
 .themes-container{
@@ -83,21 +83,74 @@ nav{
 
 .wall-of-news{
     margin-top:50px;
+    padding-top: 20px;
+    perspective:800px;
+    background:rgba(20, 20, 20, 0.103);
+    border-radius: 5px;
+
+}
+.container-fluid{
+
 }
 
 .mini{
-    border: 1px solid rgb(163, 163, 163);
-    border-radius: 8px;
+   
     padding:0!important;
-    margin: 2px;
+    overflow: hidden;
+    border-radius:8px;
+    box-shadow: 1px 2px 50px rgb(7, 7, 7); 
+    transition:.5s;
+}
+.mini:hover{
+    
+    box-shadow: 1px 2px 20px rgb(255, 255, 255); 
+    transform: scale(1.2);
+    /* transform: rotateX(16deg) translateZ(34px); */
+    z-index:5;
+    /* border-radius:55px; */
+
 }
 
 .img-news{
     border-radius:8px;
-    display: block;
 }
 
 .titre{
-    display: block;
+    position: absolute;
+    top: 0;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 1px rgb(146, 146, 146);
 
 }
+
+.date{
+    position: absolute;
+    right: 1px;
+    bottom:0;
+    transform: translateY(16px);
+    background:rgba(255, 5, 5, 0.726);
+    border-radius: 5px;
+}
+
+.overlay{
+    width:100%;
+    height:4vw;
+    background:rgba(0, 0, 0, 0.829);
+    position: absolute;
+    transition: .6s;
+    border-radius:8px;
+    bottom:20%;
+    transform: rotate(-5deg);
+
+
+}
+
+.overlay:hover{
+    background:rgba(87, 87, 87, 0.144);
+    /* transform: rotate(-6deg); */
+    /* transform: translate(-500px,30px); */
+    opacity:0;
+    transform: scale(.2);
+}
+

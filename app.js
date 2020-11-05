@@ -97,7 +97,7 @@ const newsROW = document.querySelector('.news-row')
 
 function showNews (){
 
-    for (i=0; i<=20;i++){
+    for (i=0; i<20;i++){
         newsROW.innerHTML +=
         `
         <div class="col-2 mini m-2">

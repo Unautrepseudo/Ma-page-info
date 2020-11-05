@@ -1,31 +1,50 @@
- fetch('https://jsonplaceholder.typicode.com/posts')
-    .then(response => response.json())
-    .then((data) =>{
-        let output ='';
-     data.forEach(function(test){
-          
-       output +=
-        `
-        <div>
-            ${test.title}
-        </div>
-        <div>
-            ${test.body}
-        </div>
-        `
+const ap = document.querySelector('#ap');
+const ap2 = document.querySelector('#ap2');
+const image = document.querySelector('.img-news');
+const titre = document.querySelector('.titre');
 
-        ap.innerHTML = output
+const NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c'
+const RSS_MONDE = 'https://www.francetvinfo.fr/monde.rss';
+const RSS_FR ='https://www.francetvinfo.fr/france.rss';
+const RSS_EURO ='https://www.francetvinfo.fr/monde/europe.rss';
+const RSS_ENV ='https://www.francetvinfo.fr/monde/environnement.rss';
+const RSS_ECO ='https://www.francetvinfo.fr/economie/tendances.rss';
+ //fetch mediapart
+fetch(NEWSAPI_SCIENCE)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
     })
+
+
+
+fetch(RSS_MONDE)
+.then(response => response.text())
+.then(str => new DOMParser().parseFromString(str, "text/xml"))
+.then(data => {
+    items = data.querySelectorAll('item')
+
+    items.forEach( item =>{
+
+        title = item.querySelector('title').innerHTML
+        pubDate = item.querySelector('pubDate').innerHTML
+        link = item.querySelector('link').innerHTML
+        img = item.querySelector('enclosure').getAttribute('url')
+        image.src =img
+        titre.innerText = title
+        console.log(title)
+        console.log(img)
+
+    })
+
+    
+
 })
 
 
 
-
-
-
-
- let ap = document.querySelector('#ap');
- let ap2 = document.querySelector('#ap2');
+//  let ap = document.querySelector('#ap');
+//  let ap2 = document.querySelector('#ap2');
 
 // let search = document.querySelector('#search');
 // let array =[];

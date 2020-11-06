@@ -93,26 +93,42 @@
 
 
 //front
-const newsROW = document.querySelector('.news-row')
+// const newsROW = document.querySelector('.news-row')
 
-function showNews (){
+// function showNews (){
 
-    for (i=0; i<20;i++){
-        newsROW.innerHTML +=
-        `
-        <div class="col-2 mini m-2">
-                        <div class="overlay">
-                            <p class="titre text-center px-2">Élection américaine : les recours annoncés par Donald Trump sont du "cinéma", selon le spécialiste des États-Unis Paul Schor</p>
+//     for (i=0; i<15;i++){
+//         newsROW.innerHTML +=
+//         `
+//         <div class="col-2 mini m-2">
+//                         <div class="overlay">
+//                             <p class="titre text-center px-2">Élection américaine : les recours annoncés par Donald Trump sont du "cinéma", selon le spécialiste des États-Unis Paul Schor</p>
 
-                        </div>
+//                         </div>
                         
-                        <img class= 'img-news img-fluid'  src="test.jpg" alt="">
-                        <p class="date px-2 text-white"> Le 10/8/2020 à 6h30</p>
+//                         <img class= 'img-news img-fluid'  src="test.jpg" alt="">
+//                         <p class="date px-2 text-white"> Le 10/8/2020 à 6h30</p>
 
-                    </div>
+//                     </div>
         
-        `
-    }
+//         `
+//     }
 
-}
-showNews()
+// }
+// showNews()
+
+
+
+const themBloc = document.querySelector('.yuyu');
+const flip = document.querySelector('.nav-flip');
+const flap = document.querySelector('.nav-flap');
+themBloc.addEventListener('mouseover',function(){
+    flip.style.opacity = 0;
+    flap.style.opacity = 1;
+
+})
+themBloc.addEventListener('mouseout',function(){
+    flip.style.opacity = 1;
+    flap.style.opacity = 0;
+
+})

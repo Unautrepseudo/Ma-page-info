@@ -1,45 +1,45 @@
-// const ap = document.querySelector('#ap'),
-//       ap2 = document.querySelector('#ap2'),
-//       image = document.querySelector('.img-news'),
-//       titre = document.querySelector('.titre'),
+const image = document.querySelector('.img-news'),
+      titre = document.querySelector('.titre'),
 
-//       NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c'
-//       RSS_MONDE = 'https://www.francetvinfo.fr/monde.rss',
-//       RSS_FR ='https://www.francetvinfo.fr/france.rss',
-//       RSS_EURO ='https://www.francetvinfo.fr/monde/europe.rss',
-//       RSS_ENV ='https://www.francetvinfo.fr/monde/environnement.rss',
-//       RSS_ECO ='https://www.francetvinfo.fr/economie/tendances.rss';
-//  //fetch mediapart
-// fetch(NEWSAPI_SCIENCE)
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data)
-//     })
+    NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c'
+      RSS_MONDE = 'https://www.francetvinfo.fr/monde.rss',
+      RSS_FR ='https://www.francetvinfo.fr/france.rss',
+      RSS_EURO ='https://www.francetvinfo.fr/monde/europe.rss',
+      RSS_ENV ='https://www.francetvinfo.fr/monde/environnement.rss',
+      RSS_ECO ='https://www.francetvinfo.fr/economie/tendances.rss';
+ //fetch api
+fetch(NEWSAPI_SCIENCE)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+    })
 
-
-
-// fetch(RSS_MONDE)
-// .then(response => response.text())
-// .then(str => new DOMParser().parseFromString(str, "text/xml"))
-// .then(data => {
-//     items = data.querySelectorAll('item')
-
-//     items.forEach( item =>{
-
-//         title = item.querySelector('title').innerHTML
-//         pubDate = item.querySelector('pubDate').innerHTML
-//         link = item.querySelector('link').innerHTML
-//         img = item.querySelector('enclosure').getAttribute('url')
-//         image.src =img
-//         titre.innerText = title
-//         console.log(title)
-//         console.log(img)
-
-//     })
-
+//fetch rss
+ const test =[]
+ const test2 =[]
+ const test3 =[]
+async function getData(){
     
-
-// })
+    fetch(RSS_ECO)
+    .then(response => response.text())
+    .then(str => new DOMParser().parseFromString(str, "text/xml"))
+    .then(data => {
+        items = data.querySelectorAll('item')
+    
+        items.forEach( item =>{
+              
+            title = item.querySelector('title').innerHTML
+            pubDate = item.querySelector('pubDate').innerHTML
+            link = item.querySelector('link').innerHTML
+            img = item.querySelector('enclosure').getAttribute('url')
+            test2.push(pubDate)
+            test.push(title)
+            test3.push(img)
+            //console.log(img)
+        })
+    })
+}
+getData()
 
 
 
@@ -101,24 +101,25 @@
 
 */
 
-//front
+//////////////////////////FRONT
 
 ///////////////////////// NEWS ROW ///////////////////////////////////
 const newsROW = document.querySelector('.news-row');
 // newsROW.innerHTML = '';
 
-function showNews (){
+async function showNews (){
+    await getData();
     if(newsROW.innerHTML == ''){
-        for (i=0; i<20;i++){
+        for (i=0; i<test.length;i++){
             newsROW.innerHTML +=
             `
-            <div class=" news-card mb-2 col-3 flex-column">
+            <div class=" news-card mb-3 col-3 flex-column">
                 <div class=" mini ">
-                    <img class= 'img-news img-fluid'  src="test.jpg" alt="">
-                    <p class="date px-2 "> Le 10/8/2020 à 6h30</p>
+                    <img class= 'img-news img-fluid'  src="${test3[i]}" alt="">
+                    <p class="date px-2 ">${test2[i]}</p>
                 </div>
                 <div class="overlay  p-0 m-0">
-                    <p class="titre  px-2">Élection américaine : les recours annoncés par Donald Trump sont du "cinéma", selon le spécialiste des États-Unis Paul Schor</p>
+                    <p class="titre  px-2">${test[i]}</p>
                 </div>
             </div>
             `

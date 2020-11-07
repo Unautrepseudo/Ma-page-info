@@ -118,87 +118,53 @@
 // showNews()
 
 
+//////////////////////////////NAV BAR///////////////
 
-// const themBloc = document.querySelector('.yuyu');
-// const flip = document.querySelector('.nav-flip');
-// const flap = document.querySelector('.nav-flap');
-// const nav = document.querySelector('.nav');
-// themBloc.addEventListener('mouseover',function(){
-//     flip.style.opacity = 0;
-//     flap.style.opacity = 1;
-//     flap.style.background = 'linear-gradient(149deg, rgba(58,96,180,0) 0%, rgba(29,175,253,0) 82%, rgba(69,168,252,0.783650078369906) 100%)';
-//     nav.style.borderBottom ='1px solid rgba(8, 177, 163, 0.916)';
-// })
-// themBloc.addEventListener('mouseout',function(){
-//     flip.style.opacity = 1;
-//     flap.style.opacity = 0;
-//     nav.style.borderBottom ='1px solid rgba(8, 177, 163, 0.116)';
-
-// })
 const themesTable =[
     {
         name : 'Science',
         icone: `<i class="fas fa-microscope"></i>`,
-        borderL :'1px solid rgba(15, 131, 151, 0.205)',
-        borderR:'1px solid rgba(15, 131, 151, 0.281)',
-        boxShad: '1px 1px 4px rgba(8, 177, 163, 0.219)',
-        lineColor : '1px solid rgba(28, 177, 163, 0.916)',
-        bckGround : 'linear-gradient(25deg, rgba(69,168,252,0) 0%, rgba(255,255,255,0) 67%, rgba(33,181,38,0.783650078369906) 100%)'
+        boxShad: 'rgba(8, 177, 163, 0.219)',
+        lineColor : 'rgba(128, 177, 163, 0.416)'
 
     },
     {
         name : 'Economie',
         icone: `<i class="fas fa-piggy-bank"></i>`,
-        borderL :'1px solid rgba(15, 131, 151, 0.205)',
-        borderR:'1px solid rgba(15, 131, 151, 0.281)',
-        boxShad: '1px 1px 4px rgba(8, 177, 163, 0.219)',
-        lineColor : '1px solid rgba(28, 177, 163, 0.916)',
-        bckGround : 'linear-gradient(25deg, rgba(69,168,252,0) 0%, rgba(255,255,255,0) 67%, rgba(33,181,38,0.783650078369906) 100%)'
+        boxShad: 'rgba(28, 177, 63, 0.416)',
+        lineColor : 'rgba(28, 177, 63, 0.416)'
 
     },
 
     {
         name : 'France',
         icone: `<i class="fas fa-frog"></i>`,
-        borderL :'1px solid rgba(15, 131, 151, 0.205)',
-        borderR:'1px solid rgba(15, 131, 151, 0.281)',
-        boxShad: '1px 1px 4px rgba(8, 177, 163, 0.219)',
-        lineColor : '1px solid rgba(28, 177, 163, 0.916)',
-        bckGround : 'linear-gradient(25deg, rgba(69,168,252,0) 0%, rgba(255,255,255,0) 67%, rgba(33,181,38,0.783650078369906) 100%)'
+        boxShad: 'rgba(28, 77, 163, 0.416)',
+        lineColor : 'rgba(28, 77, 163, 0.416)'
 
     },
     {
         name : 'Europe',
         icone: `<i class="fas fa-euro-sign"></i>`,
-        borderL :'1px solid rgba(15, 131, 151, 0.205)',
-        borderR:'1px solid rgba(15, 131, 151, 0.281)',
-        boxShad: '1px 1px 4px rgba(8, 177, 163, 0.219)',
-        lineColor : '1px solid rgba(28, 177, 163, 0.916)',
-        bckGround : 'linear-gradient(25deg, rgba(69,168,252,0) 0%, rgba(255,255,255,0) 67%, rgba(33,181,38,0.783650078369906) 100%)'
+        boxShad: 'rgba(28, 17, 13, 0.416)',
+        lineColor : 'rgba(28, 17, 13, 0.416)'
 
     },
     {
         name : 'Monde',
         icone: `<i class="fas fa-globe"></i>`,
-        borderL :'1px solid rgba(15, 131, 151, 0.205)',
-        borderR:'1px solid rgba(15, 131, 151, 0.281)',
-        boxShad: '1px 1px 4px rgba(8, 177, 163, 0.219)',
-        lineColor : '1px solid rgba(28, 177, 163, 0.916)',
-        bckGround : 'linear-gradient(25deg, rgba(69,168,252,0) 0%, rgba(255,255,255,0) 67%, rgba(33,181,38,0.783650078369906) 100%)'
+        boxShad: 'rgba(128, 177, 113, 0.516)',
+        lineColor : 'rgba(128, 177, 113, 0.516)',
 
     },
     {
         name : 'Météo',
         icone: `<i class="fas fa-cloud-sun-rain"></i>`,
-        borderL :'1px solid rgba(15, 131, 151, 0.205)',
-        borderR:'1px solid rgba(15, 131, 151, 0.281)',
-        boxShad: '1px 1px 4px rgba(8, 177, 163, 0.219)',
-        lineColor : '1px solid rgba(28, 177, 163, 0.916)',
-        bckGround : 'linear-gradient(25deg, rgba(69,168,252,0) 0%, rgba(255,255,255,0) 67%, rgba(33,181,38,0.783650078369906) 100%)'
+        boxShad: 'rgba(208, 17, 163, 0.316)',
+        lineColor : 'rgba(208, 17, 163, 0.316)'
 
     }
 ]
-
 
 const themeContainer = document.querySelector('.themes-container');
 function showNavItems (){
@@ -206,69 +172,44 @@ function showNavItems (){
     {
         themeContainer.innerHTML += 
         `   
-            <div class="theme-bloc yaya">
+            <div class="theme-bloc ">
                 <div class='nav-icone'>${elem.icone}</div>
                 <div class=' nav-texte '>${elem.name}</div>
             </div>
         `;
     })
+
+    
+}
+showNavItems()
+
+function handleNavItems(){
     const navThemes= document.querySelectorAll('.theme-bloc');
+    const nav = document.querySelector('.nav');
+
     for (i=0; i< navThemes.length;i++){
-
+        const properColor = [themesTable[i].lineColor]
+        const properShadow = [themesTable[i].boxShad]
         navThemes[i].addEventListener('mouseover',function(){
-            let navIcon= this.querySelector('.nav-icone')
-            let navText= this.querySelector('.nav-texte')
+            let navIcon= this.querySelector('.nav-icone'),
+                navText= this.querySelector('.nav-texte')
 
-        navIcon.style.opacity = 0;
-        navText.style.opacity = 1;
+            navIcon.style.opacity = 0;
+            navText.style.opacity = 1;    
+            this.style.boxShadow = `1px 1px 4px ${properShadow}`
+            nav.style.borderBottom = `2px solid ${properColor}`;
         })
 
         navThemes[i].addEventListener('mouseout',function(){
-            let navIcon= this.querySelector('.nav-icone')
-            let navText= this.querySelector('.nav-texte')
-        navIcon.style.opacity = 1;
-        navText.style.opacity = 0;
-       
+            let navIcon= this.querySelector('.nav-icone'),
+                 navText= this.querySelector('.nav-texte')
+
+            this.style.boxShadow = null
+            navIcon.style.opacity = 1;
+            navText.style.opacity = 0;
+            nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
 
         })
     }
 }
-showNavItems()
-
-function toggleContent(){
-    
-}
-
-// const navIcon= document.querySelectorAll('.nav-icone');
-// const navText= document.querySelectorAll('.nav-texte');
-// const nav = document.querySelector('.nav')
-
-// for (i=0; i< navThemes.length;i++){
-//     navThemes[i].addEventListener('mouseover',function(){
-//         console.log(this.name)
-
-//         // navIcon[i].style.opacity = 0;
-//         // navText[i].style.opacity = 1;
-    
-//         // this.style.boxShadow = table[i].boxShad;
-//         // this.style.background = table[i].bckGround;
-//         // this.style.borderLeft = table[i].borderL;
-//         // this.style.borderRight = table[i].borderR;
-//         // nav.style.borderBottom = table[i].lineColor;
-//     })
-
-
-    // navThemes[i].addEventListener('mouseout',function(){
-    //     navIcon[i].style.opacity = 1;
-    //     navText[i].style.opacity = 0;
-    //     nav.style.borderBottom ='1px solid rgba(8, 177, 163, 0.116)';
-    //     this.style.background = null;
-
-    //     this.style.borderLeft = null;
-    //     this.style.borderRight = null;
-    //     this.style.boxShadow = null;
-
-    // })
-    
-//}
-
+handleNavItems();

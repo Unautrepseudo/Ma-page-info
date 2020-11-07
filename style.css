@@ -54,6 +54,7 @@ nav{
     border-bottom: 1px solid rgba(8, 177, 163, 0.116);
      background: rgb(255, 255, 255);
      transition: .2s;
+     z-index: 4;
 
 }
 
@@ -66,8 +67,9 @@ nav{
     background:white;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
-    opacity:.7;
+    opacity:.95;
     transition: .2s;
+    z-index:5;
 
  
 }
@@ -101,7 +103,7 @@ nav{
     position: absolute;
     text-align: center;
     width:130px;
-    transition: .2s ease-in-out;
+    transition: .1s ease-in-out;
     border-radius:12px;
 
     

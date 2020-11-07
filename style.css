@@ -53,45 +53,67 @@ nav{
     height: 90px;
     border-bottom: 1px solid rgba(8, 177, 163, 0.116);
      background: rgb(255, 255, 255);
+     transition: .2s;
+
 }
 
 
 .theme-bloc{
     transform: translateY(18px);
     border-radius:12px;
-    transition: .2s;
-    font-size: 23px;
+    font-size: 25px;
     cursor: pointer;
     background:white;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
     opacity:.7;
+    transition: .2s;
+
  
 }
 
-.theme-bloc:hover{
+/* .theme-bloc:hover{
     border-left: 1px solid rgba(15, 131, 151, 0.205);
     border-right: 1px solid rgba(15, 131, 151, 0.281);
     box-shadow: 1px 1px 4px rgba(8, 177, 163, 0.219); 
     opacity: 1;
-    overflow: hidden;
-}
+} */
 
 .nav-flip{
     position: absolute;
     text-align: center;
     width:130px;
-    transition: .2s;
+    transition: .2s ease-in-out;
+    border-radius:12px;
+
     
 }
 .nav-flap{
     opacity:0;
     width:130px;
     text-align: center;
-    transition: .2s;
+    transition: .1s ease-in-out;
+    border-radius:12px;
 
 }
 
+.nav-icone{
+    position: absolute;
+    text-align: center;
+    width:130px;
+    transition: .2s ease-in-out;
+    border-radius:12px;
+
+    
+}
+.nav-texte{
+    opacity:0;
+    width:130px;
+    text-align: center;
+    transition: .1s ease-in-out;
+    border-radius:12px;
+
+}
 
 
 

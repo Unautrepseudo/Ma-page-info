@@ -1,14 +1,14 @@
-// const ap = document.querySelector('#ap');
-// const ap2 = document.querySelector('#ap2');
-// const image = document.querySelector('.img-news');
-// const titre = document.querySelector('.titre');
+// const ap = document.querySelector('#ap'),
+//       ap2 = document.querySelector('#ap2'),
+//       image = document.querySelector('.img-news'),
+//       titre = document.querySelector('.titre'),
 
-// const NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c'
-// const RSS_MONDE = 'https://www.francetvinfo.fr/monde.rss';
-// const RSS_FR ='https://www.francetvinfo.fr/france.rss';
-// const RSS_EURO ='https://www.francetvinfo.fr/monde/europe.rss';
-// const RSS_ENV ='https://www.francetvinfo.fr/monde/environnement.rss';
-// const RSS_ECO ='https://www.francetvinfo.fr/economie/tendances.rss';
+//       NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c'
+//       RSS_MONDE = 'https://www.francetvinfo.fr/monde.rss',
+//       RSS_FR ='https://www.francetvinfo.fr/france.rss',
+//       RSS_EURO ='https://www.francetvinfo.fr/monde/europe.rss',
+//       RSS_ENV ='https://www.francetvinfo.fr/monde/environnement.rss',
+//       RSS_ECO ='https://www.francetvinfo.fr/economie/tendances.rss';
 //  //fetch mediapart
 // fetch(NEWSAPI_SCIENCE)
 //     .then(response => response.json())
@@ -91,46 +91,59 @@
 //    content = contenu.filter( cont =>cont)
 // }
 
+/*
+
+ <div class="overlay">
+    <p class="titre text-center px-2">Élection américaine : les recours annoncés par Donald Trump sont du "cinéma", selon le spécialiste des États-Unis Paul Schor</p>
+</div>
+<p class="date px-2 text-white"> Le 10/8/2020 à 6h30</p>
+
+
+*/
 
 //front
-// const newsROW = document.querySelector('.news-row')
 
-// function showNews (){
+///////////////////////// NEWS ROW ///////////////////////////////////
+const newsROW = document.querySelector('.news-row');
+// newsROW.innerHTML = '';
 
-//     for (i=0; i<15;i++){
-//         newsROW.innerHTML +=
-//         `
-//         <div class="col-2 mini m-2">
-//                         <div class="overlay">
-//                             <p class="titre text-center px-2">Élection américaine : les recours annoncés par Donald Trump sont du "cinéma", selon le spécialiste des États-Unis Paul Schor</p>
+function showNews (){
+    if(newsROW.innerHTML == ''){
+        for (i=0; i<20;i++){
+            newsROW.innerHTML +=
+            `
+            <div class=" news-card mb-2 col-3 flex-column">
+                <div class=" mini ">
+                    <img class= 'img-news img-fluid'  src="test.jpg" alt="">
+                    <p class="date px-2 "> Le 10/8/2020 à 6h30</p>
+                </div>
+                <div class="overlay  p-0 m-0">
+                    <p class="titre  px-2">Élection américaine : les recours annoncés par Donald Trump sont du "cinéma", selon le spécialiste des États-Unis Paul Schor</p>
+                </div>
+            </div>
+            `
+        }
 
-//                         </div>
-                        
-//                         <img class= 'img-news img-fluid'  src="test.jpg" alt="">
-//                         <p class="date px-2 text-white"> Le 10/8/2020 à 6h30</p>
-
-//                     </div>
-        
-//         `
-//     }
-
-// }
-// showNews()
+    }else{
+        newsROW.innerHTML = '';
+    }
+}
+// showNews ()
 
 
-//////////////////////////////NAV BAR///////////////
+////////////////////////////// NAV BAR ///////////////
 
 const themesTable =[
     {
         name : 'Science',
-        icone: `<i class="fas fa-microscope"></i>`,
+        icone: 'fa-microscope',
         boxShad: 'rgba(8, 177, 163, 0.219)',
         lineColor : 'rgba(128, 177, 163, 0.416)'
 
     },
     {
         name : 'Economie',
-        icone: `<i class="fas fa-piggy-bank"></i>`,
+        icone: 'fa-piggy-bank',
         boxShad: 'rgba(28, 177, 63, 0.416)',
         lineColor : 'rgba(28, 177, 63, 0.416)'
 
@@ -138,28 +151,28 @@ const themesTable =[
 
     {
         name : 'France',
-        icone: `<i class="fas fa-frog"></i>`,
+        icone: 'fa-frog',
         boxShad: 'rgba(28, 77, 163, 0.416)',
         lineColor : 'rgba(28, 77, 163, 0.416)'
 
     },
     {
         name : 'Europe',
-        icone: `<i class="fas fa-euro-sign"></i>`,
+        icone: 'fa-euro-sign',
         boxShad: 'rgba(28, 17, 13, 0.416)',
         lineColor : 'rgba(28, 17, 13, 0.416)'
 
     },
     {
         name : 'Monde',
-        icone: `<i class="fas fa-globe"></i>`,
+        icone: 'fa-globe',
         boxShad: 'rgba(128, 177, 113, 0.516)',
         lineColor : 'rgba(128, 177, 113, 0.516)',
 
     },
     {
         name : 'Météo',
-        icone: `<i class="fas fa-cloud-sun-rain"></i>`,
+        icone: 'fa-cloud-sun-rain',
         boxShad: 'rgba(208, 17, 163, 0.316)',
         lineColor : 'rgba(208, 17, 163, 0.316)'
 
@@ -173,7 +186,7 @@ function showNavItems (){
         themeContainer.innerHTML += 
         `   
             <div class="theme-bloc ">
-                <div class='nav-icone'>${elem.icone}</div>
+                <div class='nav-icone'><i class="fas ${elem.icone}"></i></div>
                 <div class=' nav-texte '>${elem.name}</div>
             </div>
         `;
@@ -183,7 +196,7 @@ function showNavItems (){
 }
 showNavItems()
 
-function handleNavItems(){
+function handleNavItemsHover(){
     const navThemes= document.querySelectorAll('.theme-bloc');
     const nav = document.querySelector('.nav');
 
@@ -193,7 +206,6 @@ function handleNavItems(){
         navThemes[i].addEventListener('mouseover',function(){
             let navIcon= this.querySelector('.nav-icone'),
                 navText= this.querySelector('.nav-texte')
-
             navIcon.style.opacity = 0;
             navText.style.opacity = 1;    
             this.style.boxShadow = `1px 1px 4px ${properShadow}`
@@ -203,13 +215,14 @@ function handleNavItems(){
         navThemes[i].addEventListener('mouseout',function(){
             let navIcon= this.querySelector('.nav-icone'),
                  navText= this.querySelector('.nav-texte')
-
             this.style.boxShadow = null
             navIcon.style.opacity = 1;
             navText.style.opacity = 0;
             nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
-
         })
+
+        navThemes[i].addEventListener('click',showNews)
+
     }
 }
-handleNavItems();
+handleNavItemsHover();

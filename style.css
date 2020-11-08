@@ -119,7 +119,7 @@ nav{
     position: absolute;
     left:0;
     bottom:0;
-    transform: translateY(16px);
+    transform: translateY(17px);
     background:rgb(255, 255, 255);
     border-radius: 0 5px 0 0;
     font-size: 15px;
@@ -129,7 +129,48 @@ nav{
 .overlay{
     background:rgb(255, 255, 255);
     transition: .6s;
-    border-radius:5px;    
+    border-radius:5px;   
+    text-decoration: none;
+ 
 }
 
 
+.titre{
+    color:black;
+}
+
+.news-card a{
+    text-decoration: none;
+
+}
+
+/*/////////////////IFrame News/////////////*/
+
+
+
+.iframe-container{
+    width: 15%;
+    height: 100%;
+    top:50px;
+    right:0;
+    background: rgba(255, 255, 255, 0.951);
+    position: absolute;
+    border-radius: 15px;
+    opacity: 0;
+    z-index:21000;
+}
+
+.close-iframe{
+    width: 2%;
+    border-radius: 15px 0 0 15px;
+    border: 1px solid rgba(153, 153, 153, 0.493);
+
+}
+
+.news-frame{
+    width: 98%;
+}
+
+.opac{
+    opacity: 1;
+}

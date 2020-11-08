@@ -1,12 +1,8 @@
 const image = document.querySelector('.img-news'),
-      titre = document.querySelector('.titre'),
+      titre = document.querySelector('.titre');
+     NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c';
 
-    NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c'
-      RSS_MONDE = 'https://www.francetvinfo.fr/monde.rss',
-      RSS_FR ='https://www.francetvinfo.fr/france.rss',
-      RSS_EURO ='https://www.francetvinfo.fr/monde/europe.rss',
-      RSS_ENV ='https://www.francetvinfo.fr/monde/environnement.rss',
-      RSS_ECO ='https://www.francetvinfo.fr/economie/tendances.rss';
+
  //fetch api
 fetch(NEWSAPI_SCIENCE)
     .then(response => response.json())
@@ -14,32 +10,200 @@ fetch(NEWSAPI_SCIENCE)
         console.log(data)
     })
 
+
+
+    
 //fetch rss
- const test =[]
- const test2 =[]
- const test3 =[]
+ const pubDateArray =[]
+ const titleArray =[]
+ const imgArray =[]
+ const linkArray =[]
+
 async function getData(){
     
-    fetch(RSS_ECO)
+    fetch(themesTable[1].flux)
     .then(response => response.text())
     .then(str => new DOMParser().parseFromString(str, "text/xml"))
     .then(data => {
         items = data.querySelectorAll('item')
     
         items.forEach( item =>{
-              
+
             title = item.querySelector('title').innerHTML
             pubDate = item.querySelector('pubDate').innerHTML
             link = item.querySelector('link').innerHTML
             img = item.querySelector('enclosure').getAttribute('url')
-            test2.push(pubDate)
-            test.push(title)
-            test3.push(img)
-            //console.log(img)
+            pubDateArray.push(pubDate)
+            titleArray.push(title)
+            imgArray.push(img)
+            linkArray.push(link)
         })
     })
 }
 getData()
+
+
+
+
+
+//////////////////////////FRONT
+
+///////////////////////// NEWS ROW ///////////////////////////////////
+const newsROW = document.querySelector('.news-row');
+// newsROW.innerHTML = '';
+
+async function showNews (){
+    await getData();
+    if(newsROW.innerHTML == ''){
+       
+        for (i=0; i<titleArray.length;i++){
+            newsROW.innerHTML +=
+            `
+            <div class=" news-card mb-3 col-3 flex-column" >
+                <a href="${linkArray[i]}" target ='newsFrame' class ="text-decoration-none" >
+                    <div class=" mini ">
+                        <img class= 'img-news img-fluid'  src="${imgArray[i]}" alt="">
+                        <p class="date px-2 ">${pubDateArray[i]}</p>
+                    </div>
+                    <div class="overlay  p-0 m-0">
+                        <p class="titre  px-2">${titleArray[i]}</p>
+                    </div>
+                </a>
+            </div>
+            `
+            let news = document.querySelectorAll('.news-card')
+            news.forEach( el =>
+                el.addEventListener('click',function(){
+                    document.querySelector('.iframe-container').classList.toggle('opac')
+                })
+            )
+        }
+    }else{
+        newsROW.innerHTML = '';
+        pubDateArray.length = 0;
+        titleArray.length = 0;
+        imgArray.length = 0;
+        pubDateArray.length = 0;
+        document.querySelector('.news-frame').innerHTML ='';
+    }
+
+ 
+}
+
+
+
+////////////////////////////// NAV BAR ///////////////
+
+const themesTable =[
+    {
+        name : 'Science',
+        icone: 'fa-microscope',
+        boxShad: 'rgba(8, 177, 163, 0.219)',
+        lineColor : 'rgba(128, 177, 163, 0.416)',
+        api : NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c'
+
+    },
+    {
+        name : 'Economie',
+        icone: 'fa-piggy-bank',
+        boxShad: 'rgba(28, 177, 63, 0.416)',
+        lineColor : 'rgba(28, 177, 63, 0.416)',
+        flux : RSS_ECO = 'https://www.francetvinfo.fr/economie/tendances.rss'
+
+    },
+
+    {
+        name : 'France',
+        icone: 'fa-frog',
+        boxShad: 'rgba(28, 77, 163, 0.416)',
+        lineColor : 'rgba(28, 77, 163, 0.416)',
+        flux: RSS_FR ='https://www.francetvinfo.fr/france.rss'
+
+    },
+    {
+        name : 'Europe',
+        icone: 'fa-euro-sign',
+        boxShad: 'rgba(28, 17, 13, 0.416)',
+        lineColor : 'rgba(28, 17, 13, 0.416)',
+        flux: RSS_EURO ='https://www.francetvinfo.fr/monde/europe.rss'
+
+    },
+    {
+        name : 'Monde',
+        icone: 'fa-globe',
+        boxShad: 'rgba(128, 177, 113, 0.516)',
+        lineColor : 'rgba(128, 177, 113, 0.516)',
+        flux: RSS_MONDE = 'https://www.francetvinfo.fr/monde.rss'
+
+    },
+    {
+        name : 'Météo',
+        icone: 'fa-cloud-sun-rain',
+        boxShad: 'rgba(208, 17, 163, 0.316)',
+        lineColor : 'rgba(208, 17, 163, 0.316)'
+
+    }
+]
+
+const themeContainer = document.querySelector('.themes-container');
+
+function showNavItems (){
+    themesTable.forEach( elem =>
+    {
+        themeContainer.innerHTML += 
+        `   
+            <div class="theme-bloc ">
+                <div class='nav-icone'><i class="fas ${elem.icone}"></i></div>
+                <div class=' nav-texte '>${elem.name}</div>
+            </div>
+        `;
+    })
+
+    
+}
+showNavItems()
+const nav = document.querySelector('.nav');
+const test =[];
+
+function handleNavItems(){
+    const navThemes= document.querySelectorAll('.theme-bloc');
+    const closeIframe = document.querySelector('.close-iframe');
+
+    for (i=0; i< navThemes.length;i++){
+        const properColor = [themesTable[i].lineColor]
+        const properShadow = [themesTable[i].boxShad]
+        navThemes[i].addEventListener('mouseover',function(){
+            let navIcon= this.querySelector('.nav-icone'),
+                navText= this.querySelector('.nav-texte')
+            navIcon.style.opacity = 0;
+            navText.style.opacity = 1;    
+            this.style.boxShadow = `1px 1px 4px ${properShadow}`
+            nav.style.borderBottom = `1px solid ${properColor}`;
+            nav.style.background = properColor;
+            test.push(properColor)
+        })
+
+        navThemes[i].addEventListener('mouseout',function(){
+            let navIcon= this.querySelector('.nav-icone'),
+                 navText= this.querySelector('.nav-texte')
+            this.style.boxShadow = null
+            navIcon.style.opacity = 1;
+            navText.style.opacity = 0;
+            nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
+            //nav.style.background = 'white';
+        })
+
+        navThemes[i].addEventListener('click',showNews)
+        navThemes[i].addEventListener('click',function(){
+            nav.style.background = test;
+
+        })
+
+
+    }
+}
+handleNavItems();
+
 
 
 
@@ -100,130 +264,3 @@ getData()
 
 
 */
-
-//////////////////////////FRONT
-
-///////////////////////// NEWS ROW ///////////////////////////////////
-const newsROW = document.querySelector('.news-row');
-// newsROW.innerHTML = '';
-
-async function showNews (){
-    await getData();
-    if(newsROW.innerHTML == ''){
-        for (i=0; i<test.length;i++){
-            newsROW.innerHTML +=
-            `
-            <div class=" news-card mb-3 col-3 flex-column">
-                <div class=" mini ">
-                    <img class= 'img-news img-fluid'  src="${test3[i]}" alt="">
-                    <p class="date px-2 ">${test2[i]}</p>
-                </div>
-                <div class="overlay  p-0 m-0">
-                    <p class="titre  px-2">${test[i]}</p>
-                </div>
-            </div>
-            `
-        }
-
-    }else{
-        newsROW.innerHTML = '';
-    }
-}
-// showNews ()
-
-
-////////////////////////////// NAV BAR ///////////////
-
-const themesTable =[
-    {
-        name : 'Science',
-        icone: 'fa-microscope',
-        boxShad: 'rgba(8, 177, 163, 0.219)',
-        lineColor : 'rgba(128, 177, 163, 0.416)'
-
-    },
-    {
-        name : 'Economie',
-        icone: 'fa-piggy-bank',
-        boxShad: 'rgba(28, 177, 63, 0.416)',
-        lineColor : 'rgba(28, 177, 63, 0.416)'
-
-    },
-
-    {
-        name : 'France',
-        icone: 'fa-frog',
-        boxShad: 'rgba(28, 77, 163, 0.416)',
-        lineColor : 'rgba(28, 77, 163, 0.416)'
-
-    },
-    {
-        name : 'Europe',
-        icone: 'fa-euro-sign',
-        boxShad: 'rgba(28, 17, 13, 0.416)',
-        lineColor : 'rgba(28, 17, 13, 0.416)'
-
-    },
-    {
-        name : 'Monde',
-        icone: 'fa-globe',
-        boxShad: 'rgba(128, 177, 113, 0.516)',
-        lineColor : 'rgba(128, 177, 113, 0.516)',
-
-    },
-    {
-        name : 'Météo',
-        icone: 'fa-cloud-sun-rain',
-        boxShad: 'rgba(208, 17, 163, 0.316)',
-        lineColor : 'rgba(208, 17, 163, 0.316)'
-
-    }
-]
-
-const themeContainer = document.querySelector('.themes-container');
-function showNavItems (){
-    themesTable.forEach( elem =>
-    {
-        themeContainer.innerHTML += 
-        `   
-            <div class="theme-bloc ">
-                <div class='nav-icone'><i class="fas ${elem.icone}"></i></div>
-                <div class=' nav-texte '>${elem.name}</div>
-            </div>
-        `;
-    })
-
-    
-}
-showNavItems()
-
-function handleNavItemsHover(){
-    const navThemes= document.querySelectorAll('.theme-bloc');
-    const nav = document.querySelector('.nav');
-
-    for (i=0; i< navThemes.length;i++){
-        const properColor = [themesTable[i].lineColor]
-        const properShadow = [themesTable[i].boxShad]
-        navThemes[i].addEventListener('mouseover',function(){
-            let navIcon= this.querySelector('.nav-icone'),
-                navText= this.querySelector('.nav-texte')
-            navIcon.style.opacity = 0;
-            navText.style.opacity = 1;    
-            this.style.boxShadow = `1px 1px 4px ${properShadow}`
-            nav.style.borderBottom = `2px solid ${properColor}`;
-        })
-
-        navThemes[i].addEventListener('mouseout',function(){
-            let navIcon= this.querySelector('.nav-icone'),
-                 navText= this.querySelector('.nav-texte')
-            this.style.boxShadow = null
-            navIcon.style.opacity = 1;
-            navText.style.opacity = 0;
-            nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
-        })
-
-        navThemes[i].addEventListener('click',showNews)
-
-    }
-}
-handleNavItemsHover();

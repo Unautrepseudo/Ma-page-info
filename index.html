@@ -11,24 +11,29 @@
     <title>Ma page info</title>
 </head>
 <body>
-    <!--<div class="search-container">
-        <input type="text" id ='search' placeholder='Quel sujet vous intéresse?'>
-    </div> -->
+    
     <div class="container-fluid">
         <div class="iframe-container d-flex">
-            
-            <iframe src="" frameborder="0" name ="newsFrame" class='news-frame img-fluid'></iframe>
-            <div class="close-iframe ">X</div>
-
+            <iframe src="" frameborder="0" name ="newsFrame" class='news-frame mx-auto img-fluid'></iframe>
+            <div class="close-iframe text-white py-auto"><i class="far fa-times-circle close-icon fa-2x pt-3"></i></div>
         </div>
 
         <nav class= 'nav fixed-top'>
-            <span class="title col-12 text-dark">Ma page info <span class='quali'>(titre qualitatif)</span> </span>
-            <div class="row themes-container mx-auto"></div>             
+            <div class="row d-flex justify-content-between nav-row px-5">
+                <span class="title  text-dark">Ma page info</span>
+                <div class="theme-name text-dark"></div>
+                <div class="search-container">
+                    <input type="text" id ='search' placeholder='nani?'>
+                </div>
+            </div>
+            <div class="row themes-container flex-column ml-5"></div>
+                         
         </nav>
-       
+        
+        <div class="vertical-line position-fixed"></div>
+
         <main class='row'>
-            <div class=" wall-of-news mx-auto pt-5">
+            <div class=" wall-of-news pt-5">
                 <div class="row news-row justify-content-center "></div>
             </div>
 

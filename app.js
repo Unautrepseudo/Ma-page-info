@@ -21,7 +21,7 @@ fetch(NEWSAPI_SCIENCE)
 
 async function getData(){
     
-    fetch(themesTable[1].flux)
+    fetch(themesTable[2].flux)
     .then(response => response.text())
     .then(str => new DOMParser().parseFromString(str, "text/xml"))
     .then(data => {
@@ -50,7 +50,7 @@ getData()
 
 ///////////////////////// NEWS ROW ///////////////////////////////////
 const newsROW = document.querySelector('.news-row');
-// newsROW.innerHTML = '';
+newsROW.innerHTML = '';
 
 async function showNews (){
     await getData();
@@ -84,7 +84,7 @@ async function showNews (){
         titleArray.length = 0;
         imgArray.length = 0;
         pubDateArray.length = 0;
-        document.querySelector('.news-frame').innerHTML ='';
+        document.querySelector('.news-frame').src ='';
     }
 
  
@@ -163,11 +163,10 @@ function showNavItems (){
 }
 showNavItems()
 const nav = document.querySelector('.nav');
-const test =[];
+const colorTable =[];
 
 function handleNavItems(){
     const navThemes= document.querySelectorAll('.theme-bloc');
-    const closeIframe = document.querySelector('.close-iframe');
 
     for (i=0; i< navThemes.length;i++){
         const properColor = [themesTable[i].lineColor]
@@ -180,7 +179,7 @@ function handleNavItems(){
             this.style.boxShadow = `1px 1px 4px ${properShadow}`
             nav.style.borderBottom = `1px solid ${properColor}`;
             nav.style.background = properColor;
-            test.push(properColor)
+            colorTable.push(properColor)
         })
 
         navThemes[i].addEventListener('mouseout',function(){
@@ -190,12 +189,15 @@ function handleNavItems(){
             navIcon.style.opacity = 1;
             navText.style.opacity = 0;
             nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
-            //nav.style.background = 'white';
+
+            if(newsROW.innerHTML===''){
+                nav.style.background = 'white';
+            }
         })
 
         navThemes[i].addEventListener('click',showNews)
         navThemes[i].addEventListener('click',function(){
-            nav.style.background = test;
+            nav.style.background = colorTable;
 
         })
 
@@ -204,7 +206,14 @@ function handleNavItems(){
 }
 handleNavItems();
 
+const closeNews = document.querySelector('.close-iframe')
+const newsFrame = document.querySelector('.news-frame')
 
+closeNews.addEventListener('click',function(){
+    newsFrame.src ='';
+    document.querySelector('.iframe-container').classList.toggle('opac');
+
+})
 
 
 //  let ap = document.querySelector('#ap');

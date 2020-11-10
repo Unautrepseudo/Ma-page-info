@@ -4,7 +4,7 @@ const image = document.querySelector('.img-news'),
 
 
  //fetch api
-// fetch(NEWSAPI_SCIENCE)
+// fetch('http://api.openweathermap.org/data/2.5/weather?q=paris&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric')
 //     .then(response => response.json())
 //     .then(data => {
 //         console.log(data)
@@ -57,13 +57,17 @@ async function showNews (){
     if(newsROW.innerHTML == ''){
        
         for (i=0; i<titleArray.length;i++){
+            let yoyo =[]
+            yoyo.push(`${pubDateArray[i].toString().split(' ').slice(1,5).join(' ')}`)
+
+
             newsROW.innerHTML +=
             `
             <div class=" news-card mb-3 col-3 flex-column" >
                 <a href="${linkArray[i]}" target ='newsFrame' class ="text-decoration-none" >
                     <div class=" mini ">
                         <img class= 'img-news img-fluid'  src="${imgArray[i]}" alt="">
-                        <p class="date px-2 ">${pubDateArray[i]}</p>
+                        <p class="date px-2 ">${yoyo}</p>
                     </div>
                     <div class="overlay  p-0 m-0">
                         <p class="titre  px-2">${titleArray[i]}</p>
@@ -71,6 +75,11 @@ async function showNews (){
                 </a>
             </div>
             `
+            
+            
+
+            
+
             let news = document.querySelectorAll('.news-card')
             news.forEach( el =>
                 el.addEventListener('click',function(){
@@ -139,7 +148,8 @@ const themesTable =[
         name : 'Météo',
         icone: 'fa-cloud-sun-rain',
         boxShad: 'rgba(208, 17, 163, 0.316)',
-        lineColor : 'rgba(208, 17, 163, 0.316)'
+        lineColor : 'rgba(208, 17, 163, 0.316)',
+        api : API_METEO = "http://api.openweathermap.org/data/2.5/forecast?q=paris&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric"
 
     }
 ]
@@ -296,3 +306,4 @@ closeNews.addEventListener('mouseout',function(){
 
 
 */
+

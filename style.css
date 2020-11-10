@@ -155,7 +155,7 @@ nav{
 
 .iframe-container{
     width: 0%;
-    height: 50vw;
+    height: 0%;
     top:70px;
     right:0;
     position: absolute;
@@ -193,4 +193,5 @@ nav{
 .opac{
     opacity: 1;
     width: 90%;
+    height:93vh;
 }

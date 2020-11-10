@@ -42,7 +42,13 @@ async function getData(){
 }
 getData()
 
-
+const li=[]
+function yuyu(){
+    for (i =0; i<4; i++){
+        console.log(themesTable[i].flux)
+        li.push(themesTable[i].flux)
+    }
+}
 
 
 
@@ -57,8 +63,8 @@ async function showNews (){
     if(newsROW.innerHTML == ''){
        
         for (i=0; i<titleArray.length;i++){
-            let yoyo =[]
-            yoyo.push(`${pubDateArray[i].toString().split(' ').slice(1,5).join(' ')}`)
+            let date =[]
+            date.push(`${pubDateArray[i].toString().split(' ').slice(1,5).join(' ')}`)
 
 
             newsROW.innerHTML +=
@@ -67,7 +73,7 @@ async function showNews (){
                 <a href="${linkArray[i]}" target ='newsFrame' class ="text-decoration-none" >
                     <div class=" mini ">
                         <img class= 'img-news img-fluid'  src="${imgArray[i]}" alt="">
-                        <p class="date px-2 ">${yoyo}</p>
+                        <p class="date px-2 ">${date}</p>
                     </div>
                     <div class="overlay  p-0 m-0">
                         <p class="titre  px-2">${titleArray[i]}</p>
@@ -75,10 +81,6 @@ async function showNews (){
                 </a>
             </div>
             `
-            
-            
-
-            
 
             let news = document.querySelectorAll('.news-card')
             news.forEach( el =>
@@ -247,6 +249,11 @@ closeNews.addEventListener('mouseout',function(){
     closeIcon.style.transform ="scale(1)"
 
     })
+
+// player du lol
+
+let somaFM = document.querySelector('.soma');
+somaFM.volume = 0.2;
 
 
 //  let ap = document.querySelector('#ap');

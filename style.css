@@ -195,3 +195,10 @@ nav{
     width: 90%;
     height:93vh;
 }
+
+/**********PLayer du lol *********/
+
+.soma{
+    position : absolute;
+    opacity: 0;
+}

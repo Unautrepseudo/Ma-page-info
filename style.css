@@ -202,3 +202,60 @@ nav{
     position : absolute;
     opacity: 0;
 }
+
+
+/************ meteo ***********/
+.meteo-container{
+    width: 80vw;
+    height: 800px;
+    position:relative;
+    background: rgba(0, 0, 0, 0.849);
+    border-radius: 15px 0 0 15px ;
+
+}
+
+.meteo-ville{
+    position: absolute;
+    left:40%;
+    top:4%;
+    padding-top:20px;
+    padding-left: 40px;
+    font-size:65px;
+}
+.meteo-img-container{
+    clip-path: ellipse(131% 73% at 99% 72%);
+    background-image:url(test.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+}
+
+.temp{
+    position: absolute;
+    right:3%;
+    top:26%;
+    font-size: 68px;
+}
+
+.meteo-icon{
+    position: absolute;
+    top:-20px;
+    right:5%;
+    font-size: 150px;
+}
+.sunrise{
+    font-size:30px;
+    top:200px;
+    left: 50px;
+    position: absolute;
+}
+.sunset{
+    font-size:30px;
+    top:250px;
+    left: 50px;
+    position: absolute;
+}

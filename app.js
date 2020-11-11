@@ -3,13 +3,6 @@ const image = document.querySelector('.img-news'),
      NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c';
 
 
- //fetch api
-// fetch('http://api.openweathermap.org/data/2.5/weather?q=paris&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric')
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data)
-//     })
-
 
 
     
@@ -151,7 +144,6 @@ const themesTable =[
         icone: 'fa-cloud-sun-rain',
         boxShad: 'rgba(208, 17, 163, 0.316)',
         lineColor : 'rgba(208, 17, 163, 0.316)',
-        api : API_METEO = "http://api.openweathermap.org/data/2.5/forecast?q=paris&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric"
 
     }
 ]
@@ -254,6 +246,86 @@ closeNews.addEventListener('mouseout',function(){
 
 let somaFM = document.querySelector('.soma');
 somaFM.volume = 0.2;
+
+
+////////////////////////////METEO///////////////////////////////////
+const meteoContainer = document.querySelector('.meteo-container');
+const meteoVille = document.querySelector('.meteo-ville');
+const currentTime = document.querySelector('.current-time');
+const currentDate = document.querySelector('.current-date');
+const temperature = document.querySelector('.temp');
+const sunrise = document.querySelector('.sunrise');
+const sunset = document.querySelector('.sunset');
+
+
+
+const FORECAST_METEO = "http://api.openweathermap.org/data/2.5/forecast?q=carrieres-sur-seine&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric"
+const DAYLY_METEO = "http://api.openweathermap.org/data/2.5/weather?q=carrieres-sur-seine&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric"
+const API_IP ="https://api.ipify.org?format=json"
+
+fetch(API_IP)
+.then(response => response.json())
+.then(data => {
+    const ip = data.ip;
+
+    fetch(`https://freegeoip.app/json/${ip}`)
+    .then(response => response.json())
+    .then(json =>{
+
+        const ville = json.city
+        meteoVille.innerHTML = ville
+    })
+        
+    fetch(DAYLY_METEO)
+    .then(response =>response.json())
+    .then(json =>{
+        const temp = json.main.temp
+        const sunr = json.sys.sunrise;
+        const suns =json.sys.sunset;
+        temperature.innerHTML = temp +'°';
+        sunrise.innerHTML = `Le soleil se lève à ${sunr}`;
+        sunset.innerHTML = `Le soleil se couche à ${suns}`;
+
+        console.log(suns)
+    })
+})
+
+
+
+
+let icons = {
+    Thunderstorm: 'wi wi-day-thunderstorm',
+    Drizzle: 'wi wi-day-rain',
+    Rain: 'wi wi-day-sprinkle',
+    Snow: 'wi wi-day-snow',
+    Atmosphere: 'wi wi-day-snow',
+    Clear: 'wi wi-day-sunny',
+    Clouds: 'wi wi-day-cloudy'
+  }
+
+
+  let date1 = new Date();
+
+  let dateLocale = date1.toLocaleString('fr-FR',{
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+      });
+
+    let heureLocale = date1.toLocaleString('fr-FR',{
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+    })
+  
+  currentDate.innerHTML =  dateLocale;
+currentTime.innerHTML =  heureLocale;
+
+
+
+
+
 
 
 //  let ap = document.querySelector('#ap');

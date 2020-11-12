@@ -200,62 +200,81 @@ nav{
 
 .soma{
     position : absolute;
-    opacity: 0;
+    top: 50%;
+    width: 60px;
+    left: 180px;
 }
 
 
 /************ meteo ***********/
 .meteo-container{
-    width: 80vw;
-    height: 800px;
+    width:70vw;
     position:relative;
     background: rgba(0, 0, 0, 0.849);
-    border-radius: 15px 0 0 15px ;
+    border-radius: 15px 0 0 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.726);
 
 }
 
 .meteo-ville{
     position: absolute;
-    left:40%;
-    top:4%;
+    left:42%;
+    top:15%;
     padding-top:20px;
-    padding-left: 40px;
-    font-size:65px;
-}
-.meteo-img-container{
-    clip-path: ellipse(131% 73% at 99% 72%);
-    background-image:url(test.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size:cover;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    position:absolute;
+    font-size:60px;
+    z-index:2;
+    cursor: pointer;
 }
 
+.description{
+    position: absolute;
+    left:38%;
+    top:27%;
+    padding-top:20px;
+    padding-left: 40px;
+    font-size:40px;
+    z-index:2;
+}
+
+.meteo-image{
+    clip-path: ellipse(131% 73% at 99% 72%);
+    width: 100%;
+    opacity:.7;
+    z-index:1;
+}
+
+
+.overlay{
+    position: absolute;
+    width:100%;
+    height:100%;
+    background: transparent;
+}
 .temp{
     position: absolute;
-    right:3%;
-    top:26%;
-    font-size: 68px;
+    right:5%;
+    top:200px;
+    font-size: 55px;
+    z-index:2;
+
 }
 
 .meteo-icon{
     position: absolute;
-    top:-20px;
-    right:5%;
-    font-size: 150px;
+    top:25px;
+    right:2%;
+    font-size: 130px;
+    z-index:2;
+
 }
-.sunrise{
-    font-size:30px;
-    top:200px;
-    left: 50px;
-    position: absolute;
-}
-.sunset{
-    font-size:30px;
-    top:250px;
-    left: 50px;
+
+.previsions{
+    width: 100%; 
+    height: 10%;
+    bottom:-10px;
+    background: black;
+    background: rgb(0, 0, 0);
+    z-index:2;
+    border-radius: 0 0 15px 15px;
     position: absolute;
 }

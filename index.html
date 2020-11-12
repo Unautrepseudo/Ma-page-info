@@ -20,7 +20,7 @@
         </div>
 
         <nav class= 'nav fixed-top'>
-            <div class="row d-flex justify-content-between nav-row px-5">
+            <div class="d-flex justify-content-between nav-row px-5">
                 <span class="title  text-dark">Ma page info</span>
                 <div class="theme-name text-dark"></div>
                 <div class="search-container">
@@ -41,22 +41,21 @@
         </main>  
 
         <div class="meteo-container mx-auto">
-            <h2 class ="current-date text-white pt-4 pl-5"></h2>
-            <h3 class='current-time text-white pl-5 pt-4'></h3>
-            <div class="meteo-img-container">
-                <span class=' meteo-ville text-white text-capitalize'></span>
+                <div class="overlay">
+                    <h2 class ="current-date text-white pt-3 pl-5"></h2>
+                    <h3 class='current-time text-white pl-5 pt-2'></h3>
+                    <span class=' meteo-ville text-white text-capitalize'></span>
+                    <span class=' description text-white text-capitalize'></span>
 
-                <span class="meteo-icon text-white"><i class="wi wi-night-sleet"></i></span>
-                <span class="temp text-white"></span>
-                <span class="text-white sunrise"></span>
-                <span class="text-white sunset"></span>
-
-            </div>
-
+                    <span class="meteo-icon text-white"></span>
+                    <span class="temp text-white"></span>
+                    <div class="previsions"></div>
+                </div>
+                <img src="" class="img-fluid meteo-image" alt="">
         </div>
 
     </div>
-    <video controls="" autoplay="" class='soma' name="media"><source src="http://ice2.somafm.com/dronezone-128-aac" type="audio/aac"></video>
+    <audio controls="" autoplay="" class='soma' name="media"><source src="http://ice2.somafm.com/dronezone-128-aac" type="audio/aac"><i class="fas fa-pause"></i></audio>
 
 </body>
 </html>

@@ -250,77 +250,124 @@ somaFM.volume = 0.2;
 
 ////////////////////////////METEO///////////////////////////////////
 const meteoContainer = document.querySelector('.meteo-container');
-const meteoVille = document.querySelector('.meteo-ville');
-const currentTime = document.querySelector('.current-time');
-const currentDate = document.querySelector('.current-date');
-const temperature = document.querySelector('.temp');
-const sunrise = document.querySelector('.sunrise');
-const sunset = document.querySelector('.sunset');
+
+
 
 
 
 const FORECAST_METEO = "http://api.openweathermap.org/data/2.5/forecast?q=carrieres-sur-seine&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric"
-const DAYLY_METEO = "http://api.openweathermap.org/data/2.5/weather?q=carrieres-sur-seine&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric"
-const API_IP ="https://api.ipify.org?format=json"
 
-fetch(API_IP)
-.then(response => response.json())
-.then(data => {
-    const ip = data.ip;
+async function meteo(withIP = true){
+    let ville;
+    
+    if(withIP){
+        const ip =  await fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(json => json.ip)
 
-    fetch(`https://freegeoip.app/json/${ip}`)
-    .then(response => response.json())
-    .then(json =>{
+        ville = await fetch(`https://freegeoip.app/json/${ip}`)
+            .then(response => response.json())
+            .then(json => json.city)
+    }else{
+        ville = document.querySelector('.meteo-ville').innerHTML;
+    }   
+            
+    const daily = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric`)
+        .then(response =>response.json())
+        .then(json => json)
 
-        const ville = json.city
-        meteoVille.innerHTML = ville
+    displayInfos(daily)
+}
+
+const meteoVille = document.querySelector('.meteo-ville');
+
+function displayInfos(data){
+    const name = data.name;
+    const temp = data.main.temp;
+    const condition = data.weather[0].main;
+    const description = data.weather[0].description;
+
+    const descri= document.querySelector('.description');
+    const wi =document.querySelector('.meteo-icon')
+    const temperature = document.querySelector('.temp');
+    const meteoImg = document.querySelector('.meteo-image');
+
+    meteoVille.innerHTML = name;
+    temperature.innerHTML = temp +'°';
+    descri.innerHTML = `(${description})`;
+    wi.innerHTML = `<i class="${icons[condition]}"></i>`;
+    meteoImg.src = `${backgroundImg[condition]}`;
+}
+
+
+meteo()
+
+
+    //town choice
+
+    meteoVille.addEventListener('click', ()=>{
+        meteoVille.contentEditable = true;
+        meteoVille.style.backgroundColor = 'transparent'
     })
-        
-    fetch(DAYLY_METEO)
-    .then(response =>response.json())
-    .then(json =>{
-        const temp = json.main.temp
-        const sunr = json.sys.sunrise;
-        const suns =json.sys.sunset;
-        temperature.innerHTML = temp +'°';
-        sunrise.innerHTML = `Le soleil se lève à ${sunr}`;
-        sunset.innerHTML = `Le soleil se couche à ${suns}`;
 
-        console.log(suns)
+    meteoVille.addEventListener('keydown', (e)=>{
+        if (e.keyCode === 13){
+            e.preventDefault();
+            meteoVille.contentEditable = false;
+            meteo(false)
+        }
     })
-})
 
 
 
 
-let icons = {
-    Thunderstorm: 'wi wi-day-thunderstorm',
-    Drizzle: 'wi wi-day-rain',
-    Rain: 'wi wi-day-sprinkle',
-    Snow: 'wi wi-day-snow',
-    Atmosphere: 'wi wi-day-snow',
-    Clear: 'wi wi-day-sunny',
-    Clouds: 'wi wi-day-cloudy'
+const backgroundImg ={
+    Thunderstorm: 'background_img/orage.jpg',
+    Drizzle: 'background_img/drizzle.jpg',
+    Rain: 'background_img/pluie.jpg',
+    Snow: 'background_img/neige.jpeg',
+    Atmosphere: ' wi wi-day-snow.jpg',
+    Clear: 'background_img/soleil.jpg',
+    Clouds: 'background_img/clouds.png'
+
+}
+
+
+
+const icons = {
+    Thunderstorm: ' wi wi-day-thunderstorm',
+    Drizzle: ' wi wi-day-rain',
+    Rain: ' wi wi-day-sprinkle',
+    Snow: ' wi wi-day-snow',
+    Atmosphere: ' wi wi-day-snow',
+    Clear: ' wi wi-day-sunny',
+    Clouds: ' wi wi-day-cloudy'
   }
 
+const currentTime = document.querySelector('.current-time');
+const currentDate = document.querySelector('.current-date');
 
-  let date1 = new Date();
+function heure(){
+    let date1 = new Date();
 
-  let dateLocale = date1.toLocaleString('fr-FR',{
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-      });
-
-    let heureLocale = date1.toLocaleString('fr-FR',{
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-    })
+    let dateLocale = date1.toLocaleString('fr-FR',{
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+        });
   
-  currentDate.innerHTML =  dateLocale;
-currentTime.innerHTML =  heureLocale;
+      let heureLocale = date1.toLocaleString('fr-FR',{
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+      })
+    
+    currentDate.innerHTML =  dateLocale;
+    currentTime.innerHTML =  heureLocale;
+
+}
+setInterval(heure,100)
 
 
 

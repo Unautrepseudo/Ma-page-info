@@ -41,17 +41,23 @@
         </main>  
 
         <div class="meteo-container mx-auto">
-                <div class="overlay">
-                    <h2 class ="current-date text-white pt-3 pl-5"></h2>
-                    <h3 class='current-time text-white pl-5 pt-2'></h3>
-                    <span class=' meteo-ville text-white text-capitalize'></span>
-                    <span class=' description text-white text-capitalize'></span>
+            <div class="overlay d-flex flex-column justify-content-center">
+                <span class ="current-date text-white pt-3 pl-5"></span>
+                <span class='current-time text-white pl-5 pt-2'></span>
+                <span class=' meteo-ville text-white  pl-5 text-capitalize'></span>
+                <span class=' description text-white text-capitalize'></span>
 
-                    <span class="meteo-icon text-white"></span>
-                    <span class="temp text-white"></span>
-                    <div class="previsions"></div>
+                <span class="meteo-icon text-white"></span>
+                <span class="temp text-white"></span>
+
+                <div class="forecast d-flex flex-column text-white">
+                    <h2 class='mx-auto'>Prévisions pour les prochaines 24H</h2>   
+                    <div class="meteo-cards-container py-3 d-flex justify-content-around"></div>
                 </div>
-                <img src="" class="img-fluid meteo-image" alt="">
+                
+                <div class="previsions"></div>
+            </div>
+            <img src="" class="img-fluid meteo-image" alt="">
         </div>
 
     </div>

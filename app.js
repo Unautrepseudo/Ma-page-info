@@ -275,7 +275,12 @@ async function meteo(withIP = true){
         .then(response =>response.json())
         .then(json => json)
 
+    const forecast = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${ville}&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric`)
+        .then(response=>response.json())
+        .then(json => json)
+
     displayInfos(daily)
+    loopInfo(forecast)
 }
 
 const meteoVille = document.querySelector('.meteo-ville');
@@ -298,12 +303,10 @@ function displayInfos(data){
     meteoImg.src = `${backgroundImg[condition]}`;
 }
 meteo()
-
 setInterval(meteo, 60000)
 
 
-    //town choice
-
+function townSelect(){
     meteoVille.addEventListener('click', ()=>{
         meteoVille.contentEditable = true;
         meteoVille.style.backgroundColor = 'transparent'
@@ -314,8 +317,14 @@ setInterval(meteo, 60000)
             e.preventDefault();
             meteoVille.contentEditable = false;
             meteo(false)
+            loopInfo(false)
+
+
         }
     })
+}townSelect()
+
+    
 
 
 
@@ -331,8 +340,6 @@ const backgroundImg ={
 
 }
 
-
-
 const icons = {
     Thunderstorm: ' wi wi-day-thunderstorm',
     Drizzle: ' wi wi-day-rain',
@@ -347,7 +354,7 @@ const icons = {
 const currentTime = document.querySelector('.current-time');
 const currentDate = document.querySelector('.current-date');
 
-function showDate(){
+function showDateTime(){
     function date(){
     let date1 = new Date();
 
@@ -374,40 +381,17 @@ function showDate(){
     }
     setInterval(heure,100)
     }
-showDate()
+showDateTime()
 
-//DAILY FORCAST
-const FORECAST_METEO = "http://api.openweathermap.org/data/2.5/forecast?q=carrieres-sur-seine&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric"
-fetch(FORECAST_METEO)
-.then(response=>response.json())
-.then(json=>{
-    console.log(json)
-    json
-    // showDailyInfo(json)
-    loopInfo(json)
-}) 
 
-// function showDailyInfo(data){
-//     temperature = data.list[1].main.temp
-//     icone = data.list[1].weather[0].main
-//     time = data.list[1].dt_txt
-//     console.log(temperature,icone,time)
-    
-//     forTemp = document.querySelector('.for-temp')
-//     forIcone = document.querySelector('.for-icone')
-//     forTime = document.querySelector('.for-time')
-
-//     forTemp.textContent = `${temperature}°`
-//     forIcone.innerHTML = `<i class="${icons[icone]}"></i>`;
-
-//     forTime.textContent= time.toString().split(' ').slice(1).join( ).slice(0,2) +'h'
-// }
 
 function loopInfo(data){
     let temperature =[]
     let icone =[]
     let time =[]
     let mcc = document.querySelector('.meteo-cards-container')
+    mcc.innerHTML=''
+
     for(i=1; i<=8; i++){
         temperature = data.list[i].main.temp
         icone = data.list[i].weather[0].main

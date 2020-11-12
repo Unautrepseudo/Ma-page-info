@@ -209,20 +209,11 @@ nav{
 /************ meteo ***********/
 .meteo-container{
     width:75vw;
-    height: 800px;
     position:relative;
     background: rgba(0, 0, 0, 0.849);
     border-radius: 15px 0 0 15px;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.726);
 
-}
-
-.meteo-image{
-    clip-path: ellipse(155% 73% at 96% 73%);
-    width: 100%;
-    max-height:auto;
-    height: auto;
-    opacity:.9;
 }
 
 .current-date, .current-time{
@@ -242,7 +233,12 @@ nav{
     z-index:2;
 }
 
-
+.meteo-image{
+    clip-path: ellipse(155% 73% at 96% 73%);
+    width: 100%;
+    height:30vw!important;
+    opacity:.9;
+}
 
 
 .overlay{
@@ -252,8 +248,8 @@ nav{
 }
 .temp{
     position: absolute;
-    right:8%;
-    top:138px;
+    right:1%;
+    top:10px;
     font-size: 29px;
     z-index:2;
 
@@ -261,8 +257,8 @@ nav{
 
 .meteo-icon{
     position: absolute;
-    top:25px;
-    right:4%;
+    top:40px;
+    right:5%;
     font-size: 100px;
     z-index:2;
 
@@ -272,8 +268,7 @@ nav{
     width: 100%; 
     height: 5%;
     bottom:-10px;
-    background: black;
-    background: rgb(20, 20, 20);
+    background: rgb(34, 34, 34);
     z-index:2;
     border-radius: 0 0 15px 15px;
     position: absolute;
@@ -281,8 +276,9 @@ nav{
 
 .forecast{
     width: 100%; 
-    bottom:10%;
-    background: rgba(0, 0, 0, 0.671);
+    height: 30%;
+    bottom:28px;
+    background: rgba(0, 0, 0, 0.486);
     z-index:2;
     position: absolute;
     font-size:25px;

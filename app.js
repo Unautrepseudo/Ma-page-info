@@ -326,7 +326,7 @@ const backgroundImg ={
     Rain: 'background_img/pluie.jpg',
     Snow: 'background_img/neige.jpeg',
     Atmosphere: ' wi wi-day-snow.jpg',
-    Clear: 'background_img/soleil.png',
+    Clear: 'background_img/soleil.jpg',
     Clouds: 'background_img/clouds.jpg'
 
 }
@@ -343,10 +343,12 @@ const icons = {
     Clouds: ' wi wi-day-cloudy'
   }
 
+
 const currentTime = document.querySelector('.current-time');
 const currentDate = document.querySelector('.current-date');
 
-function date(){
+function showDate(){
+    function date(){
     let date1 = new Date();
 
     let dateLocale = date1.toLocaleString('fr-FR',{
@@ -359,26 +361,27 @@ function date(){
      
     currentDate.innerHTML =  dateLocale;
       
-}date()
+    }date()
 
-function heure(){
-    let date = new Date()
-    let heureLocale = date.toLocaleString('fr-FR',{
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-    })
-    currentTime.innerHTML =  heureLocale;
-
-  
-}
-setInterval(heure,100)
+    function heure(){
+        let date = new Date()
+        let heureLocale = date.toLocaleString('fr-FR',{
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        })
+        currentTime.innerHTML =  heureLocale;
+    }
+    setInterval(heure,100)
+    }
+showDate()
 
 //DAILY FORCAST
 const FORECAST_METEO = "http://api.openweathermap.org/data/2.5/forecast?q=carrieres-sur-seine&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric"
 fetch(FORECAST_METEO)
 .then(response=>response.json())
 .then(json=>{
+    console.log(json)
     json
     // showDailyInfo(json)
     loopInfo(json)
@@ -410,22 +413,18 @@ function loopInfo(data){
         icone = data.list[i].weather[0].main
         time = data.list[i].dt_txt
 
-        console.log(temperature, icone, time)
-    
         forTemp = document.querySelector('.for-temp')
         forIcone = document.querySelector('.for-icone')
         forTime = document.querySelector('.for-time')
 
         mcc.innerHTML +=`
-        
             <div class="meteo-card px-1 flex-column">
-                <span class="for-time mx-auto">${time.toString().split(' ').slice(1).join( ).slice(0,2)}h</span>
+                <span class="for-time  mx-5">${time.toString().split(' ').slice(1).join( ).slice(0,2)}h</span>
                 <div class="cont d-flex">
                     <span class="for-icone"><i class="${icons[icone]}"></i></span>
                     <span class="for-temp align-self-start">${temperature}°</span>
                 </div>
             </div>
-        
             `
     }
  }

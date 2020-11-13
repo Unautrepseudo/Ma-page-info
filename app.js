@@ -281,26 +281,33 @@ async function meteo(withIP = true){
 
     displayInfos(daily)
     loopInfo(forecast)
+    console.log(daily, forecast)
 }
 
 const meteoVille = document.querySelector('.meteo-ville');
 
 function displayInfos(data){
     const name = data.name;
-    const temp = data.main.temp;
+    const temp = Math.round(data.main.temp);
     const condition = data.weather[0].main;
     const description = data.weather[0].description;
+    const wind = data.wind.speed
 
     const descri= document.querySelector('.description');
     const wi =document.querySelector('.meteo-icon')
     const temperature = document.querySelector('.temp');
     const meteoImg = document.querySelector('.meteo-image');
+    const windS = document.querySelector('.wind');
+
 
     meteoVille.innerHTML = name;
     temperature.innerHTML = temp +'°';
     descri.innerHTML = `(${description})`;
     wi.innerHTML = `<i class="${icons[condition]}"></i>`;
     meteoImg.src = `${backgroundImg[condition]}`;
+    windS.innerHTML =`Vent : ${wind} km/h`;
+
+    temperature.style.color = tempColor(temp);
 }
 meteo()
 setInterval(meteo, 60000)
@@ -384,6 +391,7 @@ function showDateTime(){
 showDateTime()
 
 
+const tempArray = [];
 
 function loopInfo(data){
     let temperature =[]
@@ -393,7 +401,7 @@ function loopInfo(data){
     mcc.innerHTML=''
 
     for(i=1; i<=8; i++){
-        temperature = data.list[i].main.temp
+        temperature = Math.round(data.list[i].main.temp)
         icone = data.list[i].weather[0].main
         time = data.list[i].dt_txt
 
@@ -401,17 +409,50 @@ function loopInfo(data){
         forIcone = document.querySelector('.for-icone')
         forTime = document.querySelector('.for-time')
 
+
         mcc.innerHTML +=`
-            <div class="meteo-card px-1 flex-column">
-                <span class="for-time  mx-5">${time.toString().split(' ').slice(1).join( ).slice(0,2)}h</span>
-                <div class="cont d-flex">
+            <div class="meteo-card mb-4 flex-column">
+                <span class="for-time d-flex  justify-content-center ">${time.toString().split(' ').slice(1).join( ).slice(0,2)}h</span>
+                <div class="cont d-flex justify-content-center px-3">
                     <span class="for-icone"><i class="${icons[icone]}"></i></span>
-                    <span class="for-temp align-self-start">${temperature}°</span>
+                    <span class="for-temp align-self-start">${(temperature)}°</span>
                 </div>
             </div>
             `
+            tempArray.push(temperature)
     }
+    
+    allTemps = document.querySelectorAll('.for-temp')
+    for(j =0; j< tempArray.length; j++){
+        allTemps[j].style.color = tempColor(tempArray[j]);
+
+    }
+
  }
+
+//temp color
+
+function tempColor(x){
+
+    if (x < 0 && x <= 3){
+    return 'rgb(0, 153, 255)'
+    }
+    else if(x > 3 && x <= 13){
+    return    'rgb(0, 217, 255)'
+
+    } else if(x > 13 && x <= 22){
+    return    'rgb(13, 192, 97)'
+
+    } else if(x > 22 && x <= 29){
+    return      'rgb(214, 144, 15)'
+
+    } else if(x > 29){
+    return     'rgb(214, 144, 15)'
+
+
+    }
+}
+
 
 
 //  let ap = document.querySelector('#ap');

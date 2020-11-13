@@ -2,6 +2,8 @@
 {  
     outline: none;
     font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 li{
@@ -227,9 +229,9 @@ nav{
 
 .description{
     position: absolute;
-    right:28px;
-    top:200px;
-    font-size:32px;
+    left:400px;
+    top:13px;
+    font-size:29px;
     z-index:2;
 }
 
@@ -250,7 +252,7 @@ nav{
     position: absolute;
     right:1%;
     top:10px;
-    font-size: 29px;
+    font-size: 32px;
     z-index:2;
 
 }
@@ -264,9 +266,17 @@ nav{
 
 }
 
+.wind{
+    position: absolute;
+    z-index:2;
+    top:200px;
+    right:3%;
+    font-size: 25px;
+}
+
 .previsions{
     width: 100%; 
-    height: 5%;
+    height: 3%;
     bottom:-10px;
     background: rgb(34, 34, 34);
     z-index:2;
@@ -276,27 +286,35 @@ nav{
 
 .forecast{
     width: 100%; 
-    height: 30%;
-    bottom:28px;
-    background: rgba(0, 0, 0, 0.486);
+    /* height: 30%; */
+    bottom:13px;
+    background: rgba(0, 0, 0, 0.441);
     z-index:2;
     position: absolute;
-    font-size:25px;
+    font-size:24px;
 
 }
 
+.meteo-cards-container{
+    width: 100%;
+}
 .meteo-card{
-    box-shadow: 1px 1px 2px white;
+    box-shadow: 2px 1px 4px white;
     border-radius:15px;
 }
 .for-time{
-    font-size:40px;
+    font-size:28px;
+    text-shadow:1px 1px 1px black ;
 }
 
 .for-icone{
-    font-size: 60px;
+    font-size: 50px;
+    text-shadow:1px 1px 1px black ;
+
 }
 
 .for-temp{
-    font-size:25px;
+    font-size:22px;
+    text-shadow:1px 1px 1px black ;
+
 }

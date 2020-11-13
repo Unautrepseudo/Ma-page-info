@@ -12,6 +12,13 @@ const image = document.querySelector('.img-news'),
  const imgArray =[]
  const linkArray =[]
 
+
+//  fetch("https://api.climacell.co/v3/weather/forecast/hourly?lat=48.8534&lon=2.3488&location_id=tokyo&unit_system=si&start_time=now&end_time=2020-11-18&fields=precipitation&apikey=nNtDF1yTNy3X7Kp4pGnvaF9l3Azu6w3U")
+//  .then(response =>response.json())
+//  .then(json => console.log(json[0].precipitation.value))
+
+
+
 async function getData(){
     
     fetch(themesTable[0].flux)
@@ -404,7 +411,6 @@ function loopInfo(data){
         temperature = Math.round(data.list[i].main.temp)
         icone = data.list[i].weather[0].main
         time = data.list[i].dt_txt
-
         forTemp = document.querySelector('.for-temp')
         forIcone = document.querySelector('.for-icone')
         forTime = document.querySelector('.for-time')
@@ -423,11 +429,8 @@ function loopInfo(data){
     }
     
     allTemps = document.querySelectorAll('.for-temp')
-    for(j =0; j< tempArray.length; j++){
-        allTemps[j].style.color = tempColor(tempArray[j]);
-
-    }
-
+    
+    allTemps.forEach((tmps,i) => tmps.style.color=tempColor(tempArray[i]) )
  }
 
 //temp color

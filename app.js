@@ -252,10 +252,6 @@ somaFM.volume = 0.2;
 const meteoContainer = document.querySelector('.meteo-container');
 
 
-
-
-
-
 async function meteo(withIP = true){
     let ville;
     
@@ -306,10 +302,10 @@ function displayInfos(data){
     wi.innerHTML = `<i class="${icons[condition]}"></i>`;
     meteoImg.src = `${backgroundImg[condition]}`;
     windS.innerHTML =`Vent : ${wind} km/h`;
+
+    console.log(data)
 }
 meteo()
-
-
 
 
 function precipitations(data){
@@ -322,7 +318,7 @@ function precipitations(data){
         year: 'numeric',
         month: 'numeric',
         day: 'numeric'
-        }).split('/');
+    }).split('/');
   
     let annee = fgh[2]
     let mois = fgh[0]
@@ -342,7 +338,6 @@ const precipitationContainer = document.querySelector('.precipitation-container'
 
 function showPrecipitations(data){
 
-    let precipitationsArray =[]
     prec.innerHTML=''
     precipitationContainer.innerHTML ='';
     let time = []
@@ -361,13 +356,8 @@ function showPrecipitations(data){
      let toto = document.querySelectorAll('.preci-bloc')
      toto.forEach( (toti, i)=>{
          toti.style.height = `${(data[i].precipitation.value)*20}px`
-     } )
-
+     })
 }
-
-
-
-
 
 
 function townSelect(){
@@ -382,18 +372,14 @@ function townSelect(){
             meteoVille.contentEditable = false;
             meteo(false)
             loopInfo(false)
-
-
         }
     })
 }townSelect()
 
-    
-
-
-
 
 const backgroundImg ={
+    Mist : 'background_img/mist.jpg',
+    Fog :  'background_img/brouillard.jpg',
     Thunderstorm: 'background_img/orage.jpg',
     Drizzle: 'background_img/drizzle.jpg',
     Rain: 'background_img/pluie.jpg',
@@ -401,10 +387,11 @@ const backgroundImg ={
     Atmosphere: ' wi wi-day-snow.jpg',
     Clear: 'background_img/soleil.jpg',
     Clouds: 'background_img/clouds.jpg'
-
 }
 
 const icons = {
+    Mist : ' wi wi-day-fog',
+    Fog : ' wi wi-day-fog',
     Thunderstorm: ' wi wi-day-thunderstorm',
     Drizzle: ' wi wi-day-rain',
     Rain: ' wi wi-day-sprinkle',
@@ -417,11 +404,6 @@ const icons = {
 
 const currentTime = document.querySelector('.current-time');
 const currentDate = document.querySelector('.current-date');
-
-
-
-
-
 
 function showDateTime(){
     function date(){
@@ -453,9 +435,9 @@ function showDateTime(){
 showDateTime()
 
 
-const tempArray = [];
 
 function loopInfo(data){
+    let tempArray = [];
     let temperature =[]
     let icone =[]
     let time =[]
@@ -484,12 +466,13 @@ function loopInfo(data){
     }
     
     allTemps = document.querySelectorAll('.for-temp')
-    
-    allTemps.forEach((tmps,i) => tmps.style.color=tempColor(tempArray[i]) )
+    allTemps.forEach((tmps,i) =>{
+        tmps.style.color=tempColor(tempArray[i]) 
+
+    } )
  }
 
 //temp color
-
 function tempColor(x){
 
     if (x < 0 && x <= 3){

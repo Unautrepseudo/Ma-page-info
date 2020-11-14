@@ -13,12 +13,6 @@ const image = document.querySelector('.img-news'),
  const linkArray =[]
 
 
-//  fetch("https://api.climacell.co/v3/weather/forecast/hourly?lat=48.8534&lon=2.3488&location_id=tokyo&unit_system=si&start_time=now&end_time=2020-11-18&fields=precipitation&apikey=nNtDF1yTNy3X7Kp4pGnvaF9l3Azu6w3U")
-//  .then(response =>response.json())
-//  .then(json => console.log(json[0].precipitation.value))
-
-
-
 async function getData(){
     
     fetch(themesTable[0].flux)
@@ -45,7 +39,6 @@ getData()
 const li=[]
 function yuyu(){
     for (i =0; i<4; i++){
-        console.log(themesTable[i].flux)
         li.push(themesTable[i].flux)
     }
 }
@@ -287,8 +280,8 @@ async function meteo(withIP = true){
         .then(json => json)
 
     displayInfos(daily)
+    precipitations(daily)
     loopInfo(forecast)
-    console.log(daily, forecast)
 }
 
 const meteoVille = document.querySelector('.meteo-ville');
@@ -306,18 +299,57 @@ function displayInfos(data){
     const meteoImg = document.querySelector('.meteo-image');
     const windS = document.querySelector('.wind');
 
-
     meteoVille.innerHTML = name;
     temperature.innerHTML = temp +'°';
+    temperature.style.color = tempColor(temp);
     descri.innerHTML = `(${description})`;
     wi.innerHTML = `<i class="${icons[condition]}"></i>`;
     meteoImg.src = `${backgroundImg[condition]}`;
     windS.innerHTML =`Vent : ${wind} km/h`;
-
-    temperature.style.color = tempColor(temp);
 }
 meteo()
 setInterval(meteo, 60000)
+
+
+function precipitations(data){
+    const lat = data.coord.lat
+    const lon = data.coord.lon
+    fetch(`https://api.climacell.co/v3/weather/forecast/hourly?lat=${lat}&lon=${lon}&location_id=ville&unit_system=si&start_time=now&end_time=2020-11-18&fields=precipitation&apikey=nNtDF1yTNy3X7Kp4pGnvaF9l3Azu6w3U`)
+    .then(response =>response.json())
+    .then(json => {
+        json
+        showPrecipitations(json)
+
+    })
+}
+
+function showPrecipitations(data){
+    let precipitationsArray =[]
+    for(i =0; i<24;i++){
+        precipitationsArray = data[i].precipitation.value
+        console.log(precipitationsArray)
+    }
+
+    
+
+
+}
+const prec = document.querySelector('.prec')
+
+function yiyi(){
+    let precipitationContainer = document.querySelector('.precipitation-container')
+
+    for(i= 0; i<24; i++){
+        precipitationContainer.innerHTML +=`
+            <span class='preci-bloc mr-1 text-white text-center'></span>
+        `
+        prec.innerHTML +=`
+            <span class='mx-auto precip-day text-white text-center'>${i}h</span>
+        `
+    }
+
+
+}yiyi()
 
 
 function townSelect(){

@@ -271,7 +271,9 @@ nav{
     z-index:2;
     top:200px;
     right:3%;
-    font-size: 25px;
+    font-size: 28px;
+    text-shadow:1px 1px 1px black ;
+
 }
 
 .previsions{
@@ -291,7 +293,10 @@ nav{
     background: rgba(0, 0, 0, 0.441);
     z-index:2;
     position: absolute;
-    font-size:24px;
+
+}
+.forecast-title{
+    font-size:30px;
 
 }
 
@@ -316,5 +321,46 @@ nav{
 .for-temp{
     font-size:22px;
     text-shadow:1px 1px 1px black ;
+
+}
+
+/*******PRECIPITATIONS****/
+
+.precipitation-container{
+    width: 48vw;
+    height: 12vw;
+    position: absolute;
+    z-index:2;
+    top:35%;
+    left:14vw;
+
+}
+
+
+  .preci-bloc{
+      border-top: 1px solid rgba(85, 189, 230, 0.87);
+      border-bottom: transparent;
+      border-radius: 2px 2px 0 0;
+      width: 3vw;
+      height: 200px;
+      z-index:2;
+      background: rgba(39, 157, 212, 0.315);
+      box-shadow: 1px 1px 5px 1px rgb(246, 246, 246)
+  }
+
+  .prec{
+    width: 48vw;
+    height: 2vw;
+    position: absolute;
+    z-index:2;
+    top:66%;
+    left:14vw;
+}
+
+.precip-day{
+    width: 3vw;
+    font-size:18px;
+    text-shadow:1px 1px 1px black ;
+
 
 }

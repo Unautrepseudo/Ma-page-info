@@ -308,48 +308,66 @@ function displayInfos(data){
     windS.innerHTML =`Vent : ${wind} km/h`;
 }
 meteo()
-setInterval(meteo, 60000)
+
+
 
 
 function precipitations(data){
     const lat = data.coord.lat
     const lon = data.coord.lon
-    fetch(`https://api.climacell.co/v3/weather/forecast/hourly?lat=${lat}&lon=${lon}&location_id=ville&unit_system=si&start_time=now&end_time=2020-11-18&fields=precipitation&apikey=nNtDF1yTNy3X7Kp4pGnvaF9l3Azu6w3U`)
+    var today = new Date();
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate()+2);
+    let fgh = tomorrow.toLocaleString('en-US',{
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+        }).split('/');
+  
+    let annee = fgh[2]
+    let mois = fgh[0]
+    let jour = fgh[1]
+
+    fetch(`https://api.climacell.co/v3/weather/forecast/hourly?lat=${lat}&lon=${lon}&location_id=ville&unit_system=si&start_time=now&end_time=${annee}-${mois}-${jour}&fields=precipitation&apikey=nNtDF1yTNy3X7Kp4pGnvaF9l3Azu6w3U`)
     .then(response =>response.json())
     .then(json => {
         json
         showPrecipitations(json)
-
     })
 }
 
-function showPrecipitations(data){
-    let precipitationsArray =[]
-    for(i =0; i<24;i++){
-        precipitationsArray = data[i].precipitation.value
-        console.log(precipitationsArray)
-    }
 
-    
-
-
-}
 const prec = document.querySelector('.prec')
+const precipitationContainer = document.querySelector('.precipitation-container')
 
-function yiyi(){
-    let precipitationContainer = document.querySelector('.precipitation-container')
+function showPrecipitations(data){
 
-    for(i= 0; i<24; i++){
+    let precipitationsArray =[]
+    prec.innerHTML=''
+    precipitationContainer.innerHTML ='';
+    let time = []
+    for(i =2; i<26;i++){
+        precipitationsArray = data[i].precipitation.value
+        time = data[i].observation_time.value.slice(11).slice(0,2)
+        
         precipitationContainer.innerHTML +=`
-            <span class='preci-bloc mr-1 text-white text-center'></span>
+        <span class='preci-bloc mr-1 text-white text-center'></span>
         `
         prec.innerHTML +=`
-            <span class='mx-auto precip-day text-white text-center'>${i}h</span>
+            <span class='mx-auto precip-time text-white text-center'>${time}h</span>
         `
     }
+    
+     let toto = document.querySelectorAll('.preci-bloc')
+     toto.forEach( (toti, i)=>{
+         toti.style.height = `${(data[i].precipitation.value)*20}px`
+     } )
+
+}
 
 
-}yiyi()
+
+
 
 
 function townSelect(){
@@ -400,6 +418,11 @@ const icons = {
 const currentTime = document.querySelector('.current-time');
 const currentDate = document.querySelector('.current-date');
 
+
+
+
+
+
 function showDateTime(){
     function date(){
     let date1 = new Date();
@@ -439,7 +462,7 @@ function loopInfo(data){
     let mcc = document.querySelector('.meteo-cards-container')
     mcc.innerHTML=''
 
-    for(i=1; i<=8; i++){
+    for(i=0; i<8; i++){
         temperature = Math.round(data.list[i].main.temp)
         icone = data.list[i].weather[0].main
         time = data.list[i].dt_txt

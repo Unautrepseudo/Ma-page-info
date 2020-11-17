@@ -12,41 +12,44 @@ const image = document.querySelector('.img-news'),
  const imgArray =[]
  const linkArray =[]
 
-
+ const lis= []
 async function getData(){
     
-    fetch(themesTable[0].flux)
-    .then(response => response.text())
-    .then(str => new DOMParser().parseFromString(str, "text/xml"))
-    .then(data => {
-        items = data.querySelectorAll('item')
+
     
-        items.forEach( item =>{
-
-            title = item.querySelector('title').innerHTML
-            pubDate = item.querySelector('pubDate').innerHTML
-            link = item.querySelector('link').innerHTML
-            img = item.querySelector('enclosure').getAttribute('url')
-            pubDateArray.push(pubDate)
-            titleArray.push(title)
-            imgArray.push(img)
-            linkArray.push(link)
+        fetch(themesTable[0].flux)
+        .then(response => response.text())
+        .then(str => new DOMParser().parseFromString(str, "text/xml"))
+        .then(data => {
+            items = data.querySelectorAll('item')
+            items.forEach( item =>{
+                title = item.querySelector('title').innerHTML
+                pubDate = item.querySelector('pubDate').innerHTML
+                link = item.querySelector('link').innerHTML
+                img = item.querySelector('enclosure').getAttribute('url')
+                pubDateArray.push(pubDate)
+                pubDateArray.sort().reverse()
+                pubDateArray.push(pubDate)
+                titleArray.push(title)
+                imgArray.push(img)
+                linkArray.push(link)
+            })
         })
-    })
-}
-getData()
+    
+}getData()
 
-const li=[]
-function yuyu(){
+
+ function yuyu(){
     for (i =0; i<4; i++){
-        li.push(themesTable[i].flux)
+        lis.push(themesTable[i].flux)
     }
 }
 
 
 
-///////////////FRONT
-////////////// NEWS ROW ///////////////////////////////////
+//////////////////////////FRONT
+
+///////////////////////// NEWS ROW ///////////////////////////////////
 const newsROW = document.querySelector('.news-row');
 newsROW.innerHTML = '';
 
@@ -92,6 +95,7 @@ async function showNews (){
 
  
 }
+
 
 
 
@@ -148,6 +152,9 @@ const themesTable =[
 ]
 
 const themeContainer = document.querySelector('.themes-container');
+const nav = document.querySelector('.nav');
+const verticalLine = document.querySelector('.vertical-line');
+const colorTable =[];
 
 function showNavItems (){
     themesTable.forEach( elem =>
@@ -164,10 +171,8 @@ function showNavItems (){
     
 }
 showNavItems()
-const nav = document.querySelector('.nav');
-const verticalLine = document.querySelector('.vertical-line');
+
 const themeName = document.querySelector('.theme-name');
-const colorTable =[];
 
 function handleNavItems(){
     const navThemes= document.querySelectorAll('.theme-bloc');
@@ -175,17 +180,21 @@ function handleNavItems(){
     for (i=0; i< navThemes.length;i++){
         const properColor = [themesTable[i].lineColor]
         const properShadow = [themesTable[i].boxShad]
+        
         navThemes[i].addEventListener('mouseover',function(){
             let navIcon= this.querySelector('.nav-icone'),
                 navText= this.querySelector('.nav-texte')
             navIcon.style.opacity = 0;
-            navText.style.opacity = 1;    
-            this.style.boxShadow = `1px 1px 4px ${properShadow}`
-            nav.style.borderBottom = `1px solid ${properColor}`;
-            nav.style.background = properColor;
-            verticalLine.style.background = properColor;
-
-            colorTable.push(properColor)
+            navText.style.opacity = 1;  
+            
+            if(nav.style.background ==='white' ){
+                this.style.boxShadow = `1px 1px 4px ${properShadow}`
+                nav.style.borderBottom = `1px solid ${properColor}`;
+                nav.style.background = properColor;
+                verticalLine.style.background = properColor;
+                colorTable.push(properColor)
+            }
+           
         })
 
         navThemes[i].addEventListener('mouseout',function(){
@@ -196,24 +205,21 @@ function handleNavItems(){
             navText.style.opacity = 0;
             nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
 
-            if(newsROW.innerHTML===''){
+            if(newsROW.innerHTML ===''){
                 nav.style.background = 'white';
                 verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
 
             }
         })
 
-        navThemes[i].addEventListener('click',showNews)
+       navThemes[0].addEventListener('click',showNews)
         navThemes[i].addEventListener('click',function(){
             nav.style.background = colorTable;
             verticalLine.style.background = colorTable;
             themeName.innerHTML = this.innerHTML;
-
-
+            // meteoContainer.classList.toggle('meteo-show')
 
         })
-
-
     }
 }
 handleNavItems();
@@ -250,164 +256,233 @@ somaFM.volume = 0.2;
 ////////////////////////////METEO///////////////////////////////////
 const meteoContainer = document.querySelector('.meteo-container');
 
+function pageMeteo(){
+    meteoContainer.classList.toggle('meteo-show')
 
-async function meteo(withIP = true){
-    let ville;
-    
-    if(withIP){
-        const ip =  await fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(json => json.ip)
-
-        ville = await fetch(`https://freegeoip.app/json/${ip}`)
-            .then(response => response.json())
-            .then(json => json.city)
-    }else{
-        ville = document.querySelector('.meteo-ville').innerHTML;
-    }   
-            
-    const daily = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric`)
-        .then(response =>response.json())
-        .then(json => json)
-
-    const forecast = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${ville}&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric`)
-        .then(response=>response.json())
-        .then(json => json)
-
-    displayInfos(daily)
-    precipitations(daily)
-    loopInfo(forecast)
-}
-
-const meteoVille = document.querySelector('.meteo-ville');
-
-function displayInfos(data){
-    const name = data.name;
-    const temp = Math.round(data.main.temp);
-    const condition = data.weather[0].main;
-    const description = data.weather[0].description;
-    const wind = data.wind.speed
-
-    const descri= document.querySelector('.description');
-    const wi =document.querySelector('.meteo-icon')
-    const temperature = document.querySelector('.temp');
-    const meteoImg = document.querySelector('.meteo-image');
-    const windS = document.querySelector('.wind');
-
-    meteoVille.innerHTML = name;
-    temperature.innerHTML = temp +'°';
-    temperature.style.color = tempColor(temp);
-    descri.innerHTML = `(${description})`;
-    wi.innerHTML = `<i class="${icons[condition]}"></i>`;
-    meteoImg.src = `${backgroundImg[condition]}`;
-    windS.innerHTML =`Vent : ${wind} km/h`;
-
-    console.log(data)
-}
-meteo()
-
-
-function precipitations(data){
-    const lat = data.coord.lat
-    const lon = data.coord.lon
-    var today = new Date();
-    var tomorrow = new Date();
-    tomorrow.setDate(today.getDate()+2);
-    let fgh = tomorrow.toLocaleString('en-US',{
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric'
-    }).split('/');
-  
-    let annee = fgh[2]
-    let mois = fgh[0]
-    let jour = fgh[1]
-
-    fetch(`https://api.climacell.co/v3/weather/forecast/hourly?lat=${lat}&lon=${lon}&location_id=ville&unit_system=si&start_time=now&end_time=${annee}-${mois}-${jour}&fields=precipitation&apikey=nNtDF1yTNy3X7Kp4pGnvaF9l3Azu6w3U`)
-    .then(response =>response.json())
-    .then(json => {
-        json
-        showPrecipitations(json)
-    })
-}
-
-
-const prec = document.querySelector('.prec')
-const precipitationContainer = document.querySelector('.precipitation-container')
-
-function showPrecipitations(data){
-
-    prec.innerHTML=''
-    precipitationContainer.innerHTML ='';
-    let time = []
-    for(i =2; i<26;i++){
-        precipitationsArray = data[i].precipitation.value
-        time = data[i].observation_time.value.slice(11).slice(0,2)
-        
-        precipitationContainer.innerHTML +=`
-        <span class='preci-bloc mr-1 text-white text-center'></span>
-        `
-        prec.innerHTML +=`
-            <span class='mx-auto precip-time text-white text-center'>${time}h</span>
-        `
+    const backgroundImg ={
+        Mist : 'background_img/mist.jpg',
+        Fog :  'background_img/brouillard.jpg',
+        Thunderstorm: 'background_img/orage.jpg',
+        Drizzle: 'background_img/drizzle.jpg',
+        Rain: 'background_img/pluie.jpg',
+        Snow: 'background_img/neige.jpeg',
+        Atmosphere: ' wi wi-day-snow.jpg',
+        Clear: 'background_img/soleil.jpg',
+        Clouds: 'background_img/clouds.jpg'
     }
+    const icons = {
+        Mist : ' wi wi-day-fog',
+        Fog : ' wi wi-day-fog',
+        Thunderstorm: ' wi wi-day-thunderstorm',
+        Drizzle: ' wi wi-day-rain',
+        Rain: ' wi wi-day-sprinkle',
+        Snow: ' wi wi-day-snow',
+        Atmosphere: ' wi wi-day-snow',
+        Clear: ' wi wi-day-sunny',
+        Clouds: ' wi wi-day-cloudy'
+    }
+
+    async function meteo(withIP = true){
+        let ville;
+        
+        if(withIP){
+            const ip =  await fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(json => json.ip)
+
+            ville = await fetch(`https://freegeoip.app/json/${ip}`)
+                .then(response => response.json())
+                .then(json => json.city)
+        }else{
+            ville = document.querySelector('.meteo-ville').innerHTML;
+        }   
+                
+        const daily = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric`)
+            .then(response =>response.json())
+            .then(json => json)
+
+        const forecast = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${ville}&appid=5c865a157fe8e27a102448fca6d932d0&lang=fr&units=metric`)
+            .then(response=>response.json())
+            .then(json => json)
+
+        displayInfos(daily)
+        precipitations(daily)
+        loopInfo(forecast)
+    }
+
+    const meteoVille = document.querySelector('.meteo-ville');
+
+    function displayInfos(data){
+        const name = data.name;
+        const temp = Math.round(data.main.temp);
+        const condition = data.weather[0].main;
+        const description = data.weather[0].description;
+        const wind = data.wind.speed
+
+        const descri= document.querySelector('.description');
+        const wi =document.querySelector('.meteo-icon')
+        const temperature = document.querySelector('.temp');
+        const meteoImg = document.querySelector('.meteo-image');
+        const windS = document.querySelector('.wind');
+
+        meteoVille.innerHTML = name;
+        temperature.innerHTML = temp +'°';
+        temperature.style.color = tempColor(temp);
+        descri.innerHTML = `(${description})`;
+        wi.innerHTML = `<i class="${icons[condition]}"></i>`;
+        meteoImg.src = `${backgroundImg[condition]}`;
+        windS.innerHTML =`Vent : ${wind} km/h`;
+    }
+    meteo()
+
+    function precipitations(data){
+        const lat = data.coord.lat
+        const lon = data.coord.lon
+        var today = new Date();
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate()+2);
+        let fgh = tomorrow.toLocaleString('en-US',{
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        }).split('/');
     
-     let toto = document.querySelectorAll('.preci-bloc')
-     toto.forEach( (toti, i)=>{
-         toti.style.height = `${(data[i].precipitation.value)*20}px`
-     })
-}
+        let annee = fgh[2]
+        let mois = fgh[0]
+        let jour = fgh[1]
 
+        fetch(`https://api.climacell.co/v3/weather/forecast/hourly?lat=${lat}&lon=${lon}&location_id=ville&unit_system=si&start_time=now&end_time=${annee}-${mois}-${jour}&fields=precipitation&apikey=nNtDF1yTNy3X7Kp4pGnvaF9l3Azu6w3U`)
+        .then(response =>response.json())
+        .then(json => {
+            json
+            showPrecipitations(json)
+        })
+    }
 
-function townSelect(){
-    meteoVille.addEventListener('click', ()=>{
-        meteoVille.contentEditable = true;
-        meteoVille.style.backgroundColor = 'transparent'
-    })
+    const prec = document.querySelector('.prec')
+    const precipitationContainer = document.querySelector('.precipitation-container')
 
-    meteoVille.addEventListener('keydown', (e)=>{
-        if (e.keyCode === 13){
-            e.preventDefault();
-            meteoVille.contentEditable = false;
-            meteo(false)
-            loopInfo(false)
+    function showPrecipitations(data){
+
+        prec.innerHTML=''
+        precipitationContainer.innerHTML ='';
+        let time = []
+        for(i =2; i<26;i++){
+            precipitationsArray = data[i].precipitation.value
+            time = data[i].observation_time.value.slice(11).slice(0,2)
+            
+            precipitationContainer.innerHTML +=`
+            <span class='preci-bloc mr-1 text-white text-center'></span>
+            `
+            prec.innerHTML +=`
+                <span class='mx-auto precip-time text-white text-center'>${time}h</span>
+            `
         }
-    })
-}townSelect()
+        
+        let toto = document.querySelectorAll('.preci-bloc')
+        toto.forEach( (toti, i)=>{
+            toti.style.height = `${(data[i].precipitation.value)*20}px`
+        })
+    }
+
+    function townSelect(){
+        meteoVille.addEventListener('click', ()=>{
+            meteoVille.contentEditable = true;
+            meteoVille.style.backgroundColor = 'transparent'
+        })
+
+        meteoVille.addEventListener('keydown', (e)=>{
+            if (e.keyCode === 13){
+                e.preventDefault();
+                meteoVille.contentEditable = false;
+                meteo(false)
+                loopInfo(false)
+            }
+        })
+    }townSelect()
+
+    function loopInfo(data){
+        let tempArray = [];
+        let temperature =[]
+        let icone =[]
+        let time =[]
+        let mcc = document.querySelector('.meteo-cards-container')
+        mcc.innerHTML=''
+
+        for(i=0; i<8; i++){
+            temperature = Math.round(data.list[i].main.temp)
+            icone = data.list[i].weather[0].main
+            time = data.list[i].dt_txt
+            forTemp = document.querySelector('.for-temp')
+            forIcone = document.querySelector('.for-icone')
+            forTime = document.querySelector('.for-time')
 
 
-const backgroundImg ={
-    Mist : 'background_img/mist.jpg',
-    Fog :  'background_img/brouillard.jpg',
-    Thunderstorm: 'background_img/orage.jpg',
-    Drizzle: 'background_img/drizzle.jpg',
-    Rain: 'background_img/pluie.jpg',
-    Snow: 'background_img/neige.jpeg',
-    Atmosphere: ' wi wi-day-snow.jpg',
-    Clear: 'background_img/soleil.jpg',
-    Clouds: 'background_img/clouds.jpg'
+            mcc.innerHTML +=`
+                <div class="meteo-card mb-4 flex-column">
+                    <span class="for-time d-flex  justify-content-center ">${time.toString().split(' ').slice(1).join( ).slice(0,2)}h</span>
+                    <div class="cont d-flex justify-content-center px-3">
+                        <span class="for-icone"><i class="${icons[icone]}"></i></span>
+                        <span class="for-temp align-self-start">${(temperature)}°</span>
+                    </div>
+                </div>
+                `
+                tempArray.push(temperature)
+        }
+        
+        allTemps = document.querySelectorAll('.for-temp')
+        allTemps.forEach((tmps,i) =>{
+            tmps.style.color=tempColor(tempArray[i]) 
+
+        } )
+    }
+
+    //temp color
+    function tempColor(x){
+
+        if (x < 0 && x <= 3){
+        return 'rgb(0, 153, 255)'
+        }
+        else if(x > 3 && x <= 10){
+        return    'rgb(0, 217, 255)'
+
+        } else if(x > 10 && x <= 22){
+        return    'rgb(13, 192, 97)'
+
+        } else if(x > 22 && x <= 29){
+        return      'rgb(214, 144, 15)'
+
+        } else if(x > 29){
+        return     'rgb(214, 144, 15)'
+
+
+        }
+    }
+
+
 }
 
-const icons = {
-    Mist : ' wi wi-day-fog',
-    Fog : ' wi wi-day-fog',
-    Thunderstorm: ' wi wi-day-thunderstorm',
-    Drizzle: ' wi wi-day-rain',
-    Rain: ' wi wi-day-sprinkle',
-    Snow: ' wi wi-day-snow',
-    Atmosphere: ' wi wi-day-snow',
-    Clear: ' wi wi-day-sunny',
-    Clouds: ' wi wi-day-cloudy'
-  }
+ themeContainer.lastElementChild.addEventListener('click',function(){
+     pageMeteo()
 
+        if(meteoContainer.style.opacity === '1'){
 
+            this.style.boxShadow = `1px 1px 4px ${themesTable[5].boxShad}`
+            nav.style.borderBottom = `1px solid ${themesTable[5].lineColor}`;
+            nav.style.background = `${themesTable[5].lineColor}`;
+            verticalLine.style.background = themesTable[5].lineColor;
+        }
+ 
+    
+    })
+ 
+// gestion heure/date
 const currentTime = document.querySelector('.current-time');
 const currentDate = document.querySelector('.current-date');
 
 function showDateTime(){
     function date(){
     let date1 = new Date();
-
     let dateLocale = date1.toLocaleString('fr-FR',{
         weekday: 'long',
         year: 'numeric',
@@ -415,9 +490,7 @@ function showDateTime(){
         day: 'numeric'
         });
   
-     
     currentDate.innerHTML =  dateLocale;
-      
     }date()
 
     function heure(){
@@ -430,68 +503,8 @@ function showDateTime(){
         currentTime.innerHTML =  heureLocale;
     }
     setInterval(heure,100)
-    }
-showDateTime()
-
-
-
-function loopInfo(data){
-    let tempArray = [];
-    let temperature =[]
-    let icone =[]
-    let time =[]
-    let mcc = document.querySelector('.meteo-cards-container')
-    mcc.innerHTML=''
-
-    for(i=0; i<8; i++){
-        temperature = Math.round(data.list[i].main.temp)
-        icone = data.list[i].weather[0].main
-        time = data.list[i].dt_txt
-        forTemp = document.querySelector('.for-temp')
-        forIcone = document.querySelector('.for-icone')
-        forTime = document.querySelector('.for-time')
-
-
-        mcc.innerHTML +=`
-            <div class="meteo-card mb-4 flex-column">
-                <span class="for-time d-flex  justify-content-center ">${time.toString().split(' ').slice(1).join( ).slice(0,2)}h</span>
-                <div class="cont d-flex justify-content-center px-3">
-                    <span class="for-icone"><i class="${icons[icone]}"></i></span>
-                    <span class="for-temp align-self-start">${(temperature)}°</span>
-                </div>
-            </div>
-            `
-            tempArray.push(temperature)
-    }
-    
-    allTemps = document.querySelectorAll('.for-temp')
-    allTemps.forEach((tmps,i) =>{
-        tmps.style.color=tempColor(tempArray[i]) 
-
-    } )
- }
-
-//temp color
-function tempColor(x){
-
-    if (x < 0 && x <= 3){
-    return 'rgb(0, 153, 255)'
-    }
-    else if(x > 3 && x <= 13){
-    return    'rgb(0, 217, 255)'
-
-    } else if(x > 13 && x <= 22){
-    return    'rgb(13, 192, 97)'
-
-    } else if(x > 22 && x <= 29){
-    return      'rgb(214, 144, 15)'
-
-    } else if(x > 29){
-    return     'rgb(214, 144, 15)'
-
-
-    }
 }
+showDateTime()
 
 
 
@@ -543,13 +556,4 @@ function tempColor(x){
 //    content = contenu.filter( cont =>cont)
 // }
 
-/*
-
- <div class="overlay">
-    <p class="titre text-center px-2">Élection américaine : les recours annoncés par Donald Trump sont du "cinéma", selon le spécialiste des États-Unis Paul Schor</p>
-</div>
-<p class="date px-2 text-white"> Le 10/8/2020 à 6h30</p>
-
-
-*/
 

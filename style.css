@@ -197,12 +197,19 @@ nav{
 
 /************ meteo ***********/
 .meteo-container{
+    opacity : 0;
     width:75vw;
+    border-radius:15px;
     position:relative;
     background: rgba(0, 0, 0, 0.849);
-    border-radius: 15px;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.726);
+    transition: opacity .6s ease;
 }
+
+.meteo-show{
+    opacity:1;
+}
+
 
 .current-date, .current-time{
     font-size:26px;

@@ -14,11 +14,6 @@
 <body>
     
     <div class="container-fluid">
-        <div class="iframe-container d-flex">
-            <iframe src="" frameborder="0" name ="newsFrame" class='news-frame mx-auto img-fluid'></iframe>
-            <div class="close-iframe text-white py-auto"><i class="far fa-times-circle close-icon fa-2x pt-3"></i></div>
-        </div>
-
         <nav class= 'nav fixed-top'>
             <div class="d-flex justify-content-between nav-row px-5">
                 <span class="title  text-dark">Ma page info</span>
@@ -28,16 +23,18 @@
                 </div>
             </div>
             <div class="row themes-container flex-column ml-5"></div>
-                         
         </nav>
         
         <div class="vertical-line position-fixed"></div>
 
         <main class='row'>
+            <div class="iframe-container d-flex">
+                <iframe src="" frameborder="0" name ="newsFrame" class='news-frame mx-auto img-fluid'></iframe>
+                <div class="close-iframe text-white py-auto"><i class="far fa-times-circle close-icon fa-2x pt-3"></i></div>
+            </div>
             <div class=" wall-of-news pt-5">
                 <div class="row news-row justify-content-center "></div>
             </div>
-
         </main>  
 
         <div class="meteo-container mx-auto">
@@ -46,16 +43,13 @@
                 <span class='current-time text-white pl-5 pt-2'></span>
                 <span class=' meteo-ville text-white  pl-5 text-capitalize'></span>
                 <span class=' description text-white text-capitalize'></span>
-
                 <span class="meteo-icon text-white"></span>
                 <span class="temp "></span>
                 <span class="wind text-white"></span>
 
                 <h2 class="precipitation-title">Précipitations</h2>
 
-                <div class="precipitation-container d-flex justify-content-around align-items-end">
-
-                </div>
+                <div class="precipitation-container d-flex justify-content-around align-items-end"></div>
                 <div class="prec d-flex  justify-content-around"></div>
                 <div class="annotations justify-content-around">
                     <span class='strong'>Fortes</span>
@@ -72,7 +66,6 @@
             </div>
             <img src="" class="img-fluid meteo-image" alt="">
         </div>
-
     </div>
     <audio controls="" autoplay="" class='soma' name="media"><source src="http://ice2.somafm.com/dronezone-128-aac" type="audio/aac"><i class="fas fa-pause"></i></audio>
       

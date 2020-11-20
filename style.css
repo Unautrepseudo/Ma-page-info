@@ -17,6 +17,7 @@ li{
     border-color: rgba(0, 255, 255, 0.26);
     font-size: 18px;
     margin-top:20px;
+    opacity:0;
     
 }
 
@@ -25,10 +26,7 @@ li{
     margin-bottom:20px;
 }
 
-.title, .theme-name{
-    font-size:32px;
-    margin-top:10px;
-}
+
 
 .nav-row{
     width: 100%;
@@ -41,6 +39,11 @@ nav{
      background: rgb(255, 255, 255);
      transition: .2s;
      z-index: 4;
+
+}
+.title, .theme-name{
+    font-size:32px;
+    margin-top:10px;
 }
 
 .theme-bloc{
@@ -148,8 +151,8 @@ nav{
 .iframe-container{
     width: 0%;
     height: 0%;
-    top:70px;
-    right:0;
+    margin-top:70px;
+    margin-left:9%;
     position: absolute;
     border-radius: 15px;
     opacity: 0;

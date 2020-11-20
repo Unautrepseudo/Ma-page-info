@@ -4,8 +4,8 @@ const themesTable =[
     {
         name : 'A la une',
         icone: 'fa-globe',
-        boxShad: 'rgba(28, 77, 163, 0.416)',
-        lineColor : 'rgba(28, 77, 163, 0.416)',
+        boxShad: 'rgba(8, 27, 203, 0.616)',
+        lineColor : 'rgba(8, 27, 203, 0.616)',
         flux: RSS_FR ='https://www.francetvinfo.fr/titres.rss'
 
     },
@@ -20,8 +20,8 @@ const themesTable =[
     {
         name : 'Asie',
         icone: 'fa-globe-asia',
-        boxShad: 'rgba(128, 177, 113, 0.516)',
-        lineColor : 'rgba(128, 177, 113, 0.516)',
+        boxShad: 'rgba(251, 177, 13, 0.516)',
+        lineColor : 'rgba(251, 177, 13, 0.516)',
         flux: RSS_MONDE = 'https://www.francetvinfo.fr/monde/asie.rss'
 
     },
@@ -36,8 +36,8 @@ const themesTable =[
     {
         name : 'Météo',
         icone: 'fa-cloud-sun-rain',
-        boxShad: 'rgba(208, 17, 163, 0.316)',
-        lineColor : 'rgba(208, 17, 163, 0.316)',
+        boxShad: 'rgba(8, 191, 163, 0.316)',
+        lineColor : 'rgba(8, 191, 163, 0.316)',
 
     }
 ]
@@ -52,7 +52,7 @@ function showNavItems (){
     {
         themeContainer.innerHTML += 
         `   
-            <div class="theme-bloc my-1 ">
+            <div class="theme-bloc py-1 my-1 ">
                 <div class='nav-icone'><i class="fas ${elem.icone}"></i></div>
                 <div class=' nav-texte '>${elem.name}</div>
             </div>
@@ -77,7 +77,7 @@ function handleNavItems(){
                 navText= this.querySelector('.nav-texte')
             navIcon.style.opacity = 0;
             navText.style.opacity = 1;  
-            
+            // themeName.innerText= navText.innerText
             
                 this.style.boxShadow = `1px 1px 4px ${properShadow}`
                 nav.style.borderBottom = `1px solid ${properColor}`;
@@ -95,9 +95,10 @@ function handleNavItems(){
             navIcon.style.opacity = 1;
             navText.style.opacity = 0;
             nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
+            // themeName.innerText= ''
 
             // if(nav.style.background != ''){
-                nav.style.background = 'white';
+                // nav.style.background = 'white';
                 verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
 
             // }
@@ -105,14 +106,14 @@ function handleNavItems(){
 
     //    navThemes[0].addEventListener('click',showNews)
         navThemes[i].addEventListener('click',function(){
-            nav.style.background = colorTable;
-            verticalLine.style.background = colorTable;
+            nav.style.backgroundColor = colorTable[i];
+            verticalLine.style.backgroundColor = colorTable[i];
             themeName.innerHTML = this.innerHTML;
-            if(nav.style.background != ''){
-                nav.style.background = 'white';
-                verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
+            // if(nav.style.background != ''){
+            //     nav.style.background = 'white';
+            //     verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
 
-            }
+            // }
             // meteoContainer.classList.toggle('meteo-show')
 
         })
@@ -156,7 +157,7 @@ function createNewsCards(){
     for (i=0; i<20;i++){
         newsROW.innerHTML +=
         `
-        <div class=" news-card mb-3 col-2 flex-column" >
+        <div class=" news-card mb-3 col-3 flex-column" >
             <a href="" target ='newsFrame' class ="lien text-decoration-none" >
                 <div class=" mini ">
                     <img class= 'img-news img-fluid' src="" alt="">
@@ -170,6 +171,7 @@ function createNewsCards(){
         `
     }
 }createNewsCards()
+
 const newsCards =document.querySelectorAll('.news-card')
 const liens =document.querySelectorAll('.lien')
 const imgNews =document.querySelectorAll('.img-news')
@@ -186,21 +188,13 @@ function getRssData(flux){
         })
 }
 
-// navThemes[0].addEventListener('click', function(){
-//     getRssData(themesTable[0].flux)
-//   //  console.log(getRssData)
-// })
-// au clic, je cherche la position puis je l'envoie à getDataRSS
-// rajouter value à themes et s'en servir pour récupérer le bon flux
-
-
 
 function DatabyFlux(){
-    navThemes.forEach((nav,i )=>{
-        nav.addEventListener('click', function(){
-            getRssData(themesTable[i].flux)
-            })
+    navThemes.forEach((theme,i )=>{
+        theme.addEventListener('click', function(){
+        getRssData(themesTable[i].flux)
         })
+    })
 }DatabyFlux()
 
 
@@ -212,9 +206,9 @@ function fillNews(items){
         pubDate = item.querySelector('pubDate').innerHTML
         link = item.querySelector('link').innerHTML
         img = item.querySelector('enclosure').getAttribute('url')
-        pubDateArray.push(pubDate[i])
-        pubDateArray.sort().reverse() //!fonctionne plus :D
-        pubDateArray.push(pubDate[i])
+        pubDateArray.sort().push(pubDate[i])
+        // pubDateArray //!fonctionne plus :D
+        // pubDateArray.push(pubDate[i])
 
        
             publiDate[i].innerHTML = pubDate.toString().split(' ').slice(1,5).join(' ')
@@ -239,6 +233,29 @@ function newsListener(){
 
 
 
+
+// async function getData(){
+        
+//     fetch(themesTable[0].flux)
+//     .then(response => response.text())
+//     .then(str => new DOMParser().parseFromString(str, "text/xml"))
+//     .then(data => {
+//         items = data.querySelectorAll('item')
+//         items.forEach( item =>{
+//             title = item.querySelector('title').innerHTML
+//             pubDate = item.querySelector('pubDate').innerHTML
+//             link = item.querySelector('link').innerHTML
+//             img = item.querySelector('enclosure').getAttribute('url')
+//             pubDateArray.push(pubDate)
+//             pubDateArray.sort().reverse()
+//             pubDateArray.push(pubDate)
+//             titleArray.push(title)
+//             imgArray.push(img)
+//             linkArray.push(link)
+//         })
+//     })
+
+// }getData()
 // async function showNews (){
 //     await getData();
 //     if(newsROW.innerHTML == ''){
@@ -503,7 +520,6 @@ function pageMeteo(){
 
  themeContainer.lastElementChild.addEventListener('click',function(){
      pageMeteo()
-     newsROW.innerHTML = '';
 
         if(meteoContainer.style.opacity === '1'){
 

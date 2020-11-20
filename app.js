@@ -34,14 +34,6 @@ const themesTable =[
 
     },
     {
-        name : 'Science',
-        icone: 'fa-microscope',
-        boxShad: 'rgba(8, 177, 163, 0.219)',
-        lineColor : 'rgba(128, 177, 163, 0.416)',
-        api : NEWSAPI_SCIENCE ='http://newsapi.org/v2/top-headlines?country=fr&category=science&apiKey=99dcfe7538084c93acab8a2787d9131c'
-
-    },
-    {
         name : 'Météo',
         icone: 'fa-cloud-sun-rain',
         boxShad: 'rgba(208, 17, 163, 0.316)',
@@ -178,7 +170,7 @@ function createNewsCards(){
         `
     }
 }createNewsCards()
-
+const newsCards =document.querySelectorAll('.news-card')
 const liens =document.querySelectorAll('.lien')
 const imgNews =document.querySelectorAll('.img-news')
 const titreNews =document.querySelectorAll('.titre-news')
@@ -191,23 +183,26 @@ function getRssData(flux){
     .then(data =>{
          items = data.querySelectorAll('item')
          fillNews(items)
-         //console.log(items)
         })
 }
 
-navThemes[0].addEventListener('click', function(){
-    getRssData(themesTable[0].flux)
-  //  console.log(getRssData)
-})
+// navThemes[0].addEventListener('click', function(){
+//     getRssData(themesTable[0].flux)
+//   //  console.log(getRssData)
+// })
 // au clic, je cherche la position puis je l'envoie à getDataRSS
 // rajouter value à themes et s'en servir pour récupérer le bon flux
 
 
 
 function DatabyFlux(){
-    handleNavItems()
-    console.log(navThemes)
-}
+    navThemes.forEach((nav,i )=>{
+        nav.addEventListener('click', function(){
+            getRssData(themesTable[i].flux)
+            })
+        })
+}DatabyFlux()
+
 
 
 function fillNews(items){
@@ -221,10 +216,13 @@ function fillNews(items){
         pubDateArray.sort().reverse() //!fonctionne plus :D
         pubDateArray.push(pubDate[i])
 
-        publiDate[i].innerHTML = pubDate.toString().split(' ').slice(1,5).join(' ')
-        liens[i].href = link
-        imgNews[i].src = img
-        titreNews[i].innerHTML = title
+       
+            publiDate[i].innerHTML = pubDate.toString().split(' ').slice(1,5).join(' ')
+            liens[i].href = link
+            imgNews[i].src = img
+            titreNews[i].innerHTML = title
+        
+      
     })
     newsListener()
 }
@@ -240,28 +238,7 @@ function newsListener(){
 }
 
 
-// async function getData(){
-        
-//     fetch(themesTable[0].flux)
-//     .then(response => response.text())
-//     .then(str => new DOMParser().parseFromString(str, "text/xml"))
-//     .then(data => {
-//         items = data.querySelectorAll('item')
-//         items.forEach( item =>{
-//             title = item.querySelector('title').innerHTML
-//             pubDate = item.querySelector('pubDate').innerHTML
-//             link = item.querySelector('link').innerHTML
-//             img = item.querySelector('enclosure').getAttribute('url')
-//             pubDateArray.push(pubDate)
-//             pubDateArray.sort().reverse()
-//             pubDateArray.push(pubDate)
-//             titleArray.push(title)
-//             imgArray.push(img)
-//             linkArray.push(link)
-//         })
-//     })
 
-// }getData()
 // async function showNews (){
 //     await getData();
 //     if(newsROW.innerHTML == ''){
@@ -526,6 +503,7 @@ function pageMeteo(){
 
  themeContainer.lastElementChild.addEventListener('click',function(){
      pageMeteo()
+     newsROW.innerHTML = '';
 
         if(meteoContainer.style.opacity === '1'){
 

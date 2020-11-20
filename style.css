@@ -197,17 +197,21 @@ nav{
 
 /************ meteo ***********/
 .meteo-container{
-    opacity : 0;
+    display:none;
     width:75vw;
     border-radius:15px;
-    position:relative;
-    background: rgba(0, 0, 0, 0.849);
+    position:absolute;
+    background: rgba(0, 0, 0, 0.99);
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.726);
-    transition: opacity .6s ease;
+    transition:  .6s ease;
+    top: 90px;
+    left: 13%;
+    z-index: 10;
+
 }
 
 .meteo-show{
-    opacity:1;
+    display:block;
 }
 
 

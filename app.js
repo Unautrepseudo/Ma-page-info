@@ -1,143 +1,3 @@
-//Handle RSS
-
-const pubDateArray =[]
-const titleArray =[]
-const imgArray =[]
-const linkArray =[]
-const newsROW = document.querySelector('.news-row');
-
-function createNewsCards(){
-    for (i=0; i<20;i++){
-        newsROW.innerHTML +=
-        `
-        <div class=" news-card mb-3 col-3 flex-column" >
-            <a href="" target ='newsFrame' class ="lien text-decoration-none" >
-                <div class=" mini ">
-                    <img class= 'img-news img-fluid' src="" alt="">
-                    <p class="date publi-date px-2 "></p>
-                </div>
-                <div class="overlay  p-0 m-0">
-                    <p class="titre titre-news  px-2"></p>
-                </div>
-            </a>
-        </div>
-        `
-    }
-}createNewsCards()
-
-const liens =document.querySelectorAll('.lien')
-const imgNews =document.querySelectorAll('.img-news')
-const titreNews =document.querySelectorAll('.titre-news')
-const publiDate =document.querySelectorAll('.publi-date')
-
-function getRssData(){
-    fetch(themesTable[0].flux)
-    .then(response => response.text())
-    .then(str => new DOMParser().parseFromString(str, "text/xml"))
-    .then(data =>{
-         data
-         items = data.querySelectorAll('item')
-         fillNews(items)
-        })
-}
-liens[0].addEventListener('click', fillNews)
-
-function fillNews(items){
-    getRssData()
-    items.forEach(( item,i)=>{
-        title = item.querySelector('title').innerHTML
-        pubDate = item.querySelector('pubDate').innerHTML
-        link = item.querySelector('link').innerHTML
-        img = item.querySelector('enclosure').getAttribute('url')
-        pubDateArray.push(pubDate[i])
-        pubDateArray.sort().reverse()
-        pubDateArray.push(pubDate[i].toString().split(' ').slice(1,5).join(' '))
-
-        publiDate[i].textContent = pubDate
-        liens[i].href = link
-        imgNews[i].src = img
-        titreNews[i].innerHTML = title
-    })
-}
-
-function newsListener(){
-    let news = document.querySelectorAll('.news-card')
-    news.forEach( el =>
-        el.addEventListener('click',function(){
-            document.querySelector('.iframe-container').classList.toggle('opac')
-        })
-    )
-}newsListener()
-
-
-async function getData(){
-        
-    fetch(themesTable[0].flux)
-    .then(response => response.text())
-    .then(str => new DOMParser().parseFromString(str, "text/xml"))
-    .then(data => {
-        items = data.querySelectorAll('item')
-        items.forEach( item =>{
-            title = item.querySelector('title').innerHTML
-            pubDate = item.querySelector('pubDate').innerHTML
-            link = item.querySelector('link').innerHTML
-            img = item.querySelector('enclosure').getAttribute('url')
-            pubDateArray.push(pubDate)
-            pubDateArray.sort().reverse()
-            pubDateArray.push(pubDate)
-            titleArray.push(title)
-            imgArray.push(img)
-            linkArray.push(link)
-        })
-    })
-
-}getData()
-async function showNews (){
-    await getData();
-    if(newsROW.innerHTML == ''){
-       
-        for (i=0; i<20;i++){
-            let date =[]
-            date.push(`${pubDateArray[i].toString().split(' ').slice(1,5).join(' ')}`)
-
-
-            newsROW.innerHTML +=
-            `
-            <div class=" news-card mb-3 col-3 flex-column" >
-                <a href="${linkArray[i]}" target ='newsFrame' class ="text-decoration-none" >
-                    <div class=" mini ">
-                        <img class= 'img-news img-fluid'  src="${imgArray[i]}" alt="">
-                        <p class="date px-2 ">${date}</p>
-                    </div>
-                    <div class="overlay  p-0 m-0">
-                        <p class="titre  px-2">${titleArray[i]}</p>
-                    </div>
-                </a>
-            </div>
-            `
-
-            let news = document.querySelectorAll('.news-card')
-            news.forEach( el =>
-                el.addEventListener('click',function(){
-                    document.querySelector('.iframe-container').classList.toggle('opac')
-                })
-            )
-        }
-    }else{
-        newsROW.innerHTML = '';
-        pubDateArray.length = 0;
-        titleArray.length = 0;
-        imgArray.length = 0;
-        pubDateArray.length = 0;
-        document.querySelector('.news-frame').src ='';
-    }
-
- 
-}
-
-
-
-
 ////////////////////////////// NAV BAR ///////////////
 
 const themesTable =[
@@ -212,9 +72,9 @@ function showNavItems (){
 showNavItems()
 
 const themeName = document.querySelector('.theme-name');
+const navThemes= document.querySelectorAll('.theme-bloc');
 
 function handleNavItems(){
-    const navThemes= document.querySelectorAll('.theme-bloc');
 
     for (i=0; i< navThemes.length;i++){
         const properColor = [themesTable[i].lineColor]
@@ -226,13 +86,13 @@ function handleNavItems(){
             navIcon.style.opacity = 0;
             navText.style.opacity = 1;  
             
-            if(nav.style.background ==='white' ){
+            
                 this.style.boxShadow = `1px 1px 4px ${properShadow}`
                 nav.style.borderBottom = `1px solid ${properColor}`;
                 nav.style.background = properColor;
                 verticalLine.style.background = properColor;
                 colorTable.push(properColor)
-            }
+            
            
         })
 
@@ -244,18 +104,23 @@ function handleNavItems(){
             navText.style.opacity = 0;
             nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
 
-            if(newsROW.innerHTML ===''){
+            // if(nav.style.background != ''){
                 nav.style.background = 'white';
                 verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
 
-            }
+            // }
         })
 
-       navThemes[0].addEventListener('click',showNews)
+    //    navThemes[0].addEventListener('click',showNews)
         navThemes[i].addEventListener('click',function(){
             nav.style.background = colorTable;
             verticalLine.style.background = colorTable;
             themeName.innerHTML = this.innerHTML;
+            if(nav.style.background != ''){
+                nav.style.background = 'white';
+                verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
+
+            }
             // meteoContainer.classList.toggle('meteo-show')
 
         })
@@ -285,6 +150,164 @@ closeNews.addEventListener('mouseout',function(){
     closeIcon.style.transform ="scale(1)"
 
     })
+
+
+//Handle RSS
+
+const pubDateArray =[]
+const titleArray =[]
+const imgArray =[]
+const linkArray =[]
+const newsROW = document.querySelector('.news-row');
+
+function createNewsCards(){
+    for (i=0; i<20;i++){
+        newsROW.innerHTML +=
+        `
+        <div class=" news-card mb-3 col-2 flex-column" >
+            <a href="" target ='newsFrame' class ="lien text-decoration-none" >
+                <div class=" mini ">
+                    <img class= 'img-news img-fluid' src="" alt="">
+                    <p class="date publi-date px-2 "></p>
+                </div>
+                <div class="overlay  p-0 m-0">
+                    <p class="titre titre-news  px-2"></p>
+                </div>
+            </a>
+        </div>
+        `
+    }
+}createNewsCards()
+
+const liens =document.querySelectorAll('.lien')
+const imgNews =document.querySelectorAll('.img-news')
+const titreNews =document.querySelectorAll('.titre-news')
+const publiDate =document.querySelectorAll('.publi-date')
+
+function getRssData(flux){
+    fetch(flux)
+    .then(response => response.text())
+    .then(str => new DOMParser().parseFromString(str, "text/xml"))
+    .then(data =>{
+         items = data.querySelectorAll('item')
+         fillNews(items)
+         //console.log(items)
+        })
+}
+
+navThemes[0].addEventListener('click', function(){
+    getRssData(themesTable[0].flux)
+  //  console.log(getRssData)
+})
+// au clic, je cherche la position puis je l'envoie à getDataRSS
+// rajouter value à themes et s'en servir pour récupérer le bon flux
+
+
+
+function DatabyFlux(){
+    handleNavItems()
+    console.log(navThemes)
+}
+
+
+function fillNews(items){
+    getRssData
+    items.forEach(( item,i)=>{
+        title = item.querySelector('title').innerHTML
+        pubDate = item.querySelector('pubDate').innerHTML
+        link = item.querySelector('link').innerHTML
+        img = item.querySelector('enclosure').getAttribute('url')
+        pubDateArray.push(pubDate[i])
+        pubDateArray.sort().reverse() //!fonctionne plus :D
+        pubDateArray.push(pubDate[i])
+
+        publiDate[i].innerHTML = pubDate.toString().split(' ').slice(1,5).join(' ')
+        liens[i].href = link
+        imgNews[i].src = img
+        titreNews[i].innerHTML = title
+    })
+    newsListener()
+}
+
+
+function newsListener(){
+    let news = document.querySelectorAll('.news-card')
+    news.forEach( el =>
+        el.addEventListener('click',function(){
+            document.querySelector('.iframe-container').classList.toggle('opac')
+        })
+    )
+}
+
+
+// async function getData(){
+        
+//     fetch(themesTable[0].flux)
+//     .then(response => response.text())
+//     .then(str => new DOMParser().parseFromString(str, "text/xml"))
+//     .then(data => {
+//         items = data.querySelectorAll('item')
+//         items.forEach( item =>{
+//             title = item.querySelector('title').innerHTML
+//             pubDate = item.querySelector('pubDate').innerHTML
+//             link = item.querySelector('link').innerHTML
+//             img = item.querySelector('enclosure').getAttribute('url')
+//             pubDateArray.push(pubDate)
+//             pubDateArray.sort().reverse()
+//             pubDateArray.push(pubDate)
+//             titleArray.push(title)
+//             imgArray.push(img)
+//             linkArray.push(link)
+//         })
+//     })
+
+// }getData()
+// async function showNews (){
+//     await getData();
+//     if(newsROW.innerHTML == ''){
+       
+//         for (i=0; i<20;i++){
+//             let date =[]
+//             date.push(`${pubDateArray[i].toString().split(' ').slice(1,5).join(' ')}`)
+
+
+//             newsROW.innerHTML +=
+//             `
+//             <div class=" news-card mb-3 col-3 flex-column" >
+//                 <a href="${linkArray[i]}" target ='newsFrame' class ="text-decoration-none" >
+//                     <div class=" mini ">
+//                         <img class= 'img-news img-fluid'  src="${imgArray[i]}" alt="">
+//                         <p class="date px-2 ">${date}</p>
+//                     </div>
+//                     <div class="overlay  p-0 m-0">
+//                         <p class="titre  px-2">${titleArray[i]}</p>
+//                     </div>
+//                 </a>
+//             </div>
+//             `
+
+//             let news = document.querySelectorAll('.news-card')
+//             news.forEach( el =>
+//                 el.addEventListener('click',function(){
+//                     document.querySelector('.iframe-container').classList.toggle('opac')
+//                 })
+//             )
+//         }
+//     }else{
+//         newsROW.innerHTML = '';
+//         pubDateArray.length = 0;
+//         titleArray.length = 0;
+//         imgArray.length = 0;
+//         pubDateArray.length = 0;
+//         document.querySelector('.news-frame').src ='';
+//     }
+
+ 
+// }
+
+
+
+
 
 // player du lol
 
@@ -406,7 +429,7 @@ function pageMeteo(){
         prec.innerHTML=''
         precipitationContainer.innerHTML ='';
         let time = []
-        for(i =2; i<26;i++){
+        for(i =1; i<25;i++){
             precipitationsArray = data[i].precipitation.value
             time = data[i].observation_time.value.slice(11).slice(0,2)
             

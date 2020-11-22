@@ -7,7 +7,6 @@ const themesTable =[
         boxShad: 'rgba(0, 153, 255,.6)',
         lineColor : 'rgba(0, 153, 255,.6)',
         flux: RSS_FR ='https://www.francetvinfo.fr/titres.rss'
-
     },
     {
         name : 'Ecologie',
@@ -15,7 +14,6 @@ const themesTable =[
         boxShad: 'rgba(121, 207, 13, .5)',
         lineColor : 'rgba(21, 207, 13, .6)',
         flux: RSS_MONDE = 'https://www.francetvinfo.fr/monde/environnement.rss'
-
     },
     {
         name : 'Asie',
@@ -23,7 +21,6 @@ const themesTable =[
         boxShad: 'rgba(255, 77, 0 , .8)',
         lineColor : 'rgba(255, 77, 0 , .7)',
         flux: RSS_MONDE = 'https://www.francetvinfo.fr/monde/asie.rss'
-
     },
     {
         name : 'Economie',
@@ -31,14 +28,12 @@ const themesTable =[
         boxShad: 'rgba(255,0,0,.6)',
         lineColor : 'rgba(255,0,0,.7)',
         flux : RSS_ECO = 'https://www.francetvinfo.fr/economie.rss'
-
     },
     {
         name : 'Météo',
         icone: 'fa-cloud-sun-rain',
         boxShad: 'rgba(184,21,215,.4)',
         lineColor : 'rgba(184,21,215,.7)'
-
     }
 ]
 
@@ -77,17 +72,13 @@ function handleNavItems(){
                 navText= this.querySelector('.nav-texte')
             navIcon.style.opacity = 0;
             navText.style.opacity = 1;  
-            // themeName.innerText= navText.innerText
+            this.style.boxShadow = `1px 1px 5px ${properShadow}`;
+            nav.style.borderBottom = `1px solid ${properColor}`;
+            nav.style.boxShadow = `1px 1px 15px ${properShadow}`;
+            nav.style.background =`linear-gradient(150deg, ${properColor} 0%, rgba(27,27,27,1) 25%, rgba(38,38,38,0.9416141456582633) 100%)`;
+            verticalLine.style.background = properColor;
+            colorTable.push(properColor)
             
-                this.style.boxShadow = `1px 1px 5px ${properShadow}`;
-
-                nav.style.borderBottom = `1px solid ${properColor}`;
-                 nav.style.boxShadow = `1px 1px 15px ${properShadow}`;
-                 nav.style.background =`linear-gradient(150deg, ${properColor} 0%, rgba(27,27,27,1) 25%, rgba(38,38,38,0.9416141456582633) 100%)`;
-                verticalLine.style.background = properColor;
-                colorTable.push(properColor)
-            
-           
         })
 
         navThemes[i].addEventListener('mouseout',function(){
@@ -98,28 +89,13 @@ function handleNavItems(){
             navText.style.opacity = 0;
             nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
             nav.style.boxShadow = `1px 1px 2px rgba(0, 0, 3, 0.116)`;
-
-            // themeName.innerText= ''
-
-            // if(nav.style.background != ''){
-                // nav.style.background = 'linear-gradient(150deg, rgba(105,101,101,1) 0%, rgba(40,40,40,1) 25%, rgba(47,47,47,0.9416141456582633) 100%)';
-                verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
-
-            // }
+            verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
         })
 
-    //    navThemes[0].addEventListener('click',showNews)
         navThemes[i].addEventListener('click',function(){
             nav.style.background =`linear-gradient(150deg, ${properColor} 0%, rgba(27,27,27,1) 25%, rgba(38,38,38,0.9416141456582633) 100%)`;
             verticalLine.style.backgroundColor = colorTable[i];
             themeName.innerHTML = this.innerHTML;
-            // if(nav.style.background != ''){
-            //     nav.style.background = 'white';
-            //     verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
-
-            // }
-            // meteoContainer.classList.toggle('meteo-show')
-
         })
     }
 }
@@ -131,21 +107,18 @@ const closeIcon = document.querySelector('.close-icon')
 closeNews.addEventListener('click',function(){
     newsFrame.src ='';
     document.querySelector('.iframe-container').classList.toggle('opac');
-
 })
 
 closeNews.addEventListener('mouseover',function(){
 closeNews.style.opacity = .8
 closeIcon.style.color ="red"
 closeIcon.style.transform ="scale(1.2)"
-
 })
 
 closeNews.addEventListener('mouseout',function(){
     closeNews.style.opacity = .2;
     closeIcon.style.color ="white";
     closeIcon.style.transform ="scale(1)"
-
     })
 
 
@@ -210,17 +183,12 @@ function fillNews(items){
         pubDate = item.querySelector('pubDate').innerHTML
         link = item.querySelector('link').innerHTML
         img = item.querySelector('enclosure').getAttribute('url')
-        pubDateArray.sort().push(pubDate[i])
-        // pubDateArray //!fonctionne plus :D
-        // pubDateArray.push(pubDate[i])
-
-       
-            publiDate[i].innerHTML = pubDate.toString().split(' ').slice(1,5).join(' ')
-            liens[i].href = link
-            imgNews[i].src = img
-            titreNews[i].innerHTML = title
-        
-      
+        pubDateArray.push(pubDate[i])
+        pubDateArray.sort() //!fonctionne plus :D
+        publiDate[i].innerHTML = pubDate.toString().split(' ').slice(1,5).join(' ')
+        liens[i].href = link
+        imgNews[i].src = img
+        titreNews[i].innerHTML = title        
     })
     newsListener()
 }
@@ -234,77 +202,6 @@ function newsListener(){
         })
     )
 }
-
-
-
-
-// async function getData(){
-        
-//     fetch(themesTable[0].flux)
-//     .then(response => response.text())
-//     .then(str => new DOMParser().parseFromString(str, "text/xml"))
-//     .then(data => {
-//         items = data.querySelectorAll('item')
-//         items.forEach( item =>{
-//             title = item.querySelector('title').innerHTML
-//             pubDate = item.querySelector('pubDate').innerHTML
-//             link = item.querySelector('link').innerHTML
-//             img = item.querySelector('enclosure').getAttribute('url')
-//             pubDateArray.push(pubDate)
-//             pubDateArray.sort().reverse()
-//             pubDateArray.push(pubDate)
-//             titleArray.push(title)
-//             imgArray.push(img)
-//             linkArray.push(link)
-//         })
-//     })
-
-// }getData()
-// async function showNews (){
-//     await getData();
-//     if(newsROW.innerHTML == ''){
-       
-//         for (i=0; i<20;i++){
-//             let date =[]
-//             date.push(`${pubDateArray[i].toString().split(' ').slice(1,5).join(' ')}`)
-
-
-//             newsROW.innerHTML +=
-//             `
-//             <div class=" news-card mb-3 col-3 flex-column" >
-//                 <a href="${linkArray[i]}" target ='newsFrame' class ="text-decoration-none" >
-//                     <div class=" mini ">
-//                         <img class= 'img-news img-fluid'  src="${imgArray[i]}" alt="">
-//                         <p class="date px-2 ">${date}</p>
-//                     </div>
-//                     <div class="overlay  p-0 m-0">
-//                         <p class="titre  px-2">${titleArray[i]}</p>
-//                     </div>
-//                 </a>
-//             </div>
-//             `
-
-//             let news = document.querySelectorAll('.news-card')
-//             news.forEach( el =>
-//                 el.addEventListener('click',function(){
-//                     document.querySelector('.iframe-container').classList.toggle('opac')
-//                 })
-//             )
-//         }
-//     }else{
-//         newsROW.innerHTML = '';
-//         pubDateArray.length = 0;
-//         titleArray.length = 0;
-//         imgArray.length = 0;
-//         pubDateArray.length = 0;
-//         document.querySelector('.news-frame').src ='';
-//     }
-
- 
-// }
-
-
-
 
 
 //////////////////////// player du lol ////////////////////////
@@ -409,8 +306,8 @@ function pageMeteo(){
     function precipitations(data){
         const lat = data.coord.lat
         const lon = data.coord.lon
-        var today = new Date();
-        var tomorrow = new Date();
+        let today = new Date();
+        let tomorrow = new Date();
         tomorrow.setDate(today.getDate()+2);
         let fgh = tomorrow.toLocaleString('en-US',{
             year: 'numeric',
@@ -487,8 +384,6 @@ function pageMeteo(){
             forTemp = document.querySelector('.for-temp')
             forIcone = document.querySelector('.for-icone')
             forTime = document.querySelector('.for-time')
-
-
             mcc.innerHTML +=`
                 <div class="meteo-card mb-4 flex-column">
                     <span class="for-time d-flex  justify-content-center ">${time.toString().split(' ').slice(1).join( ).slice(0,2)}h</span>
@@ -498,19 +393,17 @@ function pageMeteo(){
                     </div>
                 </div>
                 `
-                tempArray.push(temperature)
+            tempArray.push(temperature)
         }
         
         allTemps = document.querySelectorAll('.for-temp')
         allTemps.forEach((tmps,i) =>{
             tmps.style.color=tempColor(tempArray[i]) 
-
         } )
     }
 
     //temp color
     function tempColor(x){
-
         if (x < 0 && x <= 3){
         return 'rgb(0, 153, 255)'
         }
@@ -525,8 +418,6 @@ function pageMeteo(){
 
         } else if(x > 29){
         return     'rgb(214, 144, 15)'
-
-
         }
     }
 
@@ -535,17 +426,13 @@ function pageMeteo(){
 
  themeContainer.lastElementChild.addEventListener('click',function(){
      pageMeteo()
-
-        if(meteoContainer.style.opacity === '1'){
-
-            this.style.boxShadow = `1px 1px 4px ${themesTable[5].boxShad}`
-            nav.style.borderBottom = `1px solid ${themesTable[5].lineColor}`;
-            nav.style.background = `${themesTable[5].lineColor}`;
-            verticalLine.style.background = themesTable[5].lineColor;
-        }
- 
-    
-    })
+    if(meteoContainer.style.opacity === '1'){
+        this.style.boxShadow = `1px 1px 4px ${themesTable[5].boxShad}`
+        nav.style.borderBottom = `1px solid ${themesTable[5].lineColor}`;
+        nav.style.background = `${themesTable[5].lineColor}`;
+        verticalLine.style.background = themesTable[5].lineColor;
+    }
+})
  
 // gestion heure/date
 const currentTime = document.querySelector('.current-time');

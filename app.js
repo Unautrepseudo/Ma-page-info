@@ -4,40 +4,40 @@ const themesTable =[
     {
         name : 'A la une',
         icone: 'fa-globe',
-        boxShad: 'rgba(8, 27, 203, 0.616)',
-        lineColor : 'rgba(8, 27, 203, 0.616)',
+        boxShad: 'rgba(0, 153, 255,.6)',
+        lineColor : 'rgba(0, 153, 255,.6)',
         flux: RSS_FR ='https://www.francetvinfo.fr/titres.rss'
 
     },
     {
-        name : 'Europe',
-        icone: 'fa-euro-sign',
-        boxShad: 'rgba(28, 17, 13, 0.416)',
-        lineColor : 'rgba(28, 17, 13, 0.416)',
-        flux: RSS_EURO ='https://www.touteleurope.eu/rss/actualites.html'
+        name : 'Ecologie',
+        icone: 'fa-hippo',
+        boxShad: 'rgba(121, 207, 13, .5)',
+        lineColor : 'rgba(21, 207, 13, .6)',
+        flux: RSS_MONDE = 'https://www.francetvinfo.fr/monde/environnement.rss'
 
     },
     {
         name : 'Asie',
         icone: 'fa-globe-asia',
-        boxShad: 'rgba(251, 177, 13, 0.516)',
-        lineColor : 'rgba(251, 177, 13, 0.516)',
+        boxShad: 'rgba(255, 77, 0 , .8)',
+        lineColor : 'rgba(255, 77, 0 , .7)',
         flux: RSS_MONDE = 'https://www.francetvinfo.fr/monde/asie.rss'
 
     },
     {
         name : 'Economie',
         icone: 'fa-piggy-bank',
-        boxShad: 'rgba(28, 177, 63, 0.416)',
-        lineColor : 'rgba(28, 177, 63, 0.416)',
+        boxShad: 'rgba(255,0,0,.6)',
+        lineColor : 'rgba(255,0,0,.7)',
         flux : RSS_ECO = 'https://www.francetvinfo.fr/economie.rss'
 
     },
     {
         name : 'Météo',
         icone: 'fa-cloud-sun-rain',
-        boxShad: 'rgba(8, 191, 163, 0.316)',
-        lineColor : 'rgba(8, 191, 163, 0.316)',
+        boxShad: 'rgba(184,21,215,.4)',
+        lineColor : 'rgba(184,21,215,.7)'
 
     }
 ]
@@ -52,7 +52,7 @@ function showNavItems (){
     {
         themeContainer.innerHTML += 
         `   
-            <div class="theme-bloc py-1 my-1 ">
+            <div class="theme-bloc p-1 my-1 ">
                 <div class='nav-icone'><i class="fas ${elem.icone}"></i></div>
                 <div class=' nav-texte '>${elem.name}</div>
             </div>
@@ -79,9 +79,11 @@ function handleNavItems(){
             navText.style.opacity = 1;  
             // themeName.innerText= navText.innerText
             
-                this.style.boxShadow = `1px 1px 4px ${properShadow}`
+                this.style.boxShadow = `1px 1px 5px ${properShadow}`;
+
                 nav.style.borderBottom = `1px solid ${properColor}`;
-                nav.style.background = properColor;
+                 nav.style.boxShadow = `1px 1px 15px ${properShadow}`;
+                 nav.style.background =`linear-gradient(150deg, ${properColor} 0%, rgba(27,27,27,1) 25%, rgba(38,38,38,0.9416141456582633) 100%)`;
                 verticalLine.style.background = properColor;
                 colorTable.push(properColor)
             
@@ -95,10 +97,12 @@ function handleNavItems(){
             navIcon.style.opacity = 1;
             navText.style.opacity = 0;
             nav.style.borderBottom = '1px solid rgba(8, 177, 163, 0.116)';
+            nav.style.boxShadow = `1px 1px 2px rgba(0, 0, 3, 0.116)`;
+
             // themeName.innerText= ''
 
             // if(nav.style.background != ''){
-                // nav.style.background = 'white';
+                // nav.style.background = 'linear-gradient(150deg, rgba(105,101,101,1) 0%, rgba(40,40,40,1) 25%, rgba(47,47,47,0.9416141456582633) 100%)';
                 verticalLine.style.background = 'rgba(8, 177, 163, 0.216)';
 
             // }
@@ -106,7 +110,7 @@ function handleNavItems(){
 
     //    navThemes[0].addEventListener('click',showNews)
         navThemes[i].addEventListener('click',function(){
-            nav.style.backgroundColor = colorTable[i];
+            nav.style.background =`linear-gradient(150deg, ${properColor} 0%, rgba(27,27,27,1) 25%, rgba(38,38,38,0.9416141456582633) 100%)`;
             verticalLine.style.backgroundColor = colorTable[i];
             themeName.innerHTML = this.innerHTML;
             // if(nav.style.background != ''){
@@ -157,7 +161,7 @@ function createNewsCards(){
     for (i=0; i<20;i++){
         newsROW.innerHTML +=
         `
-        <div class=" news-card mb-3 col-3 flex-column" >
+        <div class=" news-card mb-3 col-2 flex-column" >
             <a href="" target ='newsFrame' class ="lien text-decoration-none" >
                 <div class=" mini ">
                     <img class= 'img-news img-fluid' src="" alt="">
@@ -303,11 +307,22 @@ function newsListener(){
 
 
 
-// player du lol
+//////////////////////// player du lol ////////////////////////
+(function soma(){
 
-let somaFM = document.querySelector('.soma');
-somaFM.volume = 0.2;
+    let somaFM = document.querySelector('.soma');
+    let input = document.querySelector('#volume')
+    let lecture = document.querySelector('.lecture');
+    somaFM.volume = .2;
+    input.addEventListener('mousemove', ()=> somaFM.volume = input.value)
+    lecture.addEventListener('click', function(){
+        lecture.classList.toggle('fa-play');
+        (somaFM.paused == false) ? somaFM.pause() : somaFM.play()
+            
+        
+    })
 
+})()
 
 ////////////////////////////METEO///////////////////////////////////
 const meteoContainer = document.querySelector('.meteo-container');
